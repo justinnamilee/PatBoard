@@ -4,13 +4,13 @@ function rot2sze(a) {
   // compensate size for rotation
   return a === 90 || a === 270
     ? {
-        h: width,
-        w: height
-      }
+      h: width,
+      w: height
+    }
     : {
-        h: height,
-        w: width
-      };
+      h: height,
+      w: width
+    };
 }
 
 function arr2num(o) {
