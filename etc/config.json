@@ -1,0 +1,20 @@
+{
+  "listen": 8080,
+  "minPlayers": 2,
+  "maxPlayers": 6,
+  "debug": false,
+  "data": {
+    "player": 0,
+    "playerName": "Butthead",
+    "playerID": "",
+    "health": 30,
+    "eyeball": 0,
+    "lightning": 0,
+    "horn": 0,
+    "enemy1": 0,
+    "enemy2": 0,
+    "enemy3": 0,
+    "enemy4": 0,
+    "enemy5": 0
+  }
+}
