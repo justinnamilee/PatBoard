@@ -8,8 +8,9 @@ function preload() {
   config = loadJSON("src/config.json");
   bg = loadImage("assets/carpet.jpg");
   img = {
-    "lightning.png": loadImage("assets/lightning.png"),
+    "health.png": loadImage("assets/health.png"),
     "eyeball.png": loadImage("assets/eyeball.png"),
+    "lightning.png": loadImage("assets/lightning.png"),
     "horn.png": loadImage("assets/horn.png"),
     "enemy.png": loadImage("assets/enemy.png")
   };
@@ -45,14 +46,10 @@ function setup() {
 // output to screen
 function draw() {
   background(bg);
+
   for (let player of p) {
     player.show();
   }
 
   noLoop();
-}
-
-// capture keys
-function keyPressed() {
-
 }

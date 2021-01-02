@@ -41,7 +41,7 @@ class Player {
     angleMode(DEGREES);
     rotate(this.rotation);
 
-    fill(config.playerFill);
+    fill(config.playerEnabled);
     strokeWeight(3);
     stroke(this.color);
 
