@@ -23,7 +23,6 @@ class Counter {
 
     translate(this.position.x * (cw / 2), this.position.y * (ch / 2));
     rectMode(CENTER);
-    imageMode(CORNER);
     textSize(config.textSize); // default size
     textAlign(CENTER, CENTER);
 
@@ -38,9 +37,11 @@ class Counter {
 
     if (typeof this.image !== "undefined") {
       if (rel.h > config.image.size.max) {
-        image(img[this.image], -rel.w / 2, -rel.h / 2, config.image.size.max, config.image.size.max);
+        imageMode(CENTER);
+        image(img[this.image], (config.image.size.max - rel.w) / 2, 0, config.image.size.max, config.image.size.max);
       }
       else {
+        imageMode(CORNER);
         image(img[this.image], -rel.w / 2, -rel.h / 2, rel.h, rel.h);
       }
     }
