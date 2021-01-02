@@ -32,7 +32,7 @@ function setup() {
 
   // generate play spaces
   for (let i = 0; i < config.players; i++) {
-    p.push(new Player(config.players, i));
+    p.push(new Player(config.board, i));
   }
 }
 
