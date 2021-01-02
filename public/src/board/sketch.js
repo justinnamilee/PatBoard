@@ -16,6 +16,13 @@ function preload() {
   };
 }
 
+// helper for callbacks
+function resetLayout() {
+  for (let player of p) {
+    player.setLayout(config.board, player.index);
+  }
+}
+
 // one-time setup
 function setup() {
   // load override paramters & update
@@ -24,21 +31,42 @@ function setup() {
   for (let k in c) {
     if (k in config) {
       // replace hardcoded value (care)
-      config[k] = c[k];
+      config[k] = decodeURI(c[k]);
+      console.log("Overriding config:", k, config[k]);
     }
   }
 
+  // build our base canvas
   createCanvas(config.resolution.w, config.resolution.h);
 
+  // add selector
+  let select = createSelect();
+
+  select.position(config.select.position.x, config.select.position.y);
+
+  for (let l in config.layout) {
+    select.option(l);
+  }
+
+  select.selected(config.board);
+
+  select.changed(function () {
+    config.board = select.value();
+
+    resetLayout();
+  });
+
   // generate play spaces
-  for (let i = 0; i < config.players; i++) {
-    p.push(new Player(config.board, i));
+  if (typeof config.layout[config.board] !== "undefined") {
+    for (let i = 0; i < config.layout[config.board].position.length; i++) {
+      p.push(new Player(config.board, i));
+    }
   }
 }
 
 // output to screen
 function draw() {
-  if (config.screen === "dynamic") {
+  if (config.screen === "dynamic" && windowWidth !== config.resolution.w && windowHeight !== config.resolution.h) {
     config.resolution.w = windowWidth;
     config.resolution.h = windowHeight;
 
@@ -47,9 +75,13 @@ function draw() {
 
   background(bg);
 
-  for (let player of p) {
-    player.show();
+  for (let i = 0; i < config.layout[config.board].position.length; i++) {
+    if (i >= p.length) {
+      p.push(new Player(config.board, i));
+    }
+
+    p[i].show();
   }
 
-  noLoop();
+  // noLoop();
 }

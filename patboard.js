@@ -3,6 +3,7 @@ const config = require('./etc/config.json');
 const express = require('express');
 const app = express();
 const server = app.listen(config.listen);
+const player = {};
 
 app.use(express.static('public'));
 
@@ -19,7 +20,7 @@ io.sockets.on('connection', function(s) {
     {
       console.log('New data from: ' + s.id + ': ' + d);
     }
-  })
+  });
 });
 
 // TODO: keep game state here

@@ -1,15 +1,8 @@
 class Player {
   constructor(l, n) {
     this.index = n;
-    this.layout = l;
 
-    this.rotation = config.layout[l].rotation[n];
-
-    this.position = Object.assign({}, config.layout[l].position[n]);
-    arr2num(this.position); // encode any fractions
-
-    this.size = Object.assign({}, config.layout[l].size[n]);
-    arr2num(this.size); // encode any fractions
+    this.setLayout(l, n);
 
     this.color = "#" + Math.floor(Math.random() * 16777215).toString(16);
 
@@ -56,5 +49,17 @@ class Player {
   setColor(color) {
     this.color = color;
     console.log(`Changed player ${this.i + 1} color to ${this.color}.`);
+  }
+
+  setLayout(l, n) {
+    this.layout = l;
+
+    this.rotation = config.layout[l].rotation[n];
+
+    this.position = Object.assign({}, config.layout[l].position[n]);
+    arr2num(this.position); // encode any fractions
+
+    this.size = Object.assign({}, config.layout[l].size[n]);
+    arr2num(this.size); // encode any fractions
   }
 }
