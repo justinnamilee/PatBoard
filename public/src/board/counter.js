@@ -10,6 +10,12 @@ class Counter {
     this.text = d.text;
     this.textSize = d.textSize;
     this.value = 0;
+    this.disabled = d.disabled;
+    this.textColor = d.textColor;
+
+    if (typeof this.textColor === "undefined") {
+      this.textColor = config.text.color;
+    }
   }
 
   show(cw, ch) {
@@ -21,36 +27,56 @@ class Counter {
     textSize(config.textSize); // default size
     textAlign(CENTER, CENTER);
 
-    let relW = this.size.w * cw;
-    let relH = this.size.h * ch;
+    let rel = {
+      w: this.size.w * cw,
+      h: this.size.h * ch
+    };
 
     // draw rect and stick the image in the corner
     fill(this.fill);
-    rect(0, 0, relW, relH);
+    rect(0, 0, rel.w, rel.h);
 
     if (typeof this.image !== "undefined") {
-      image(img[this.image], -relW / 2, -relH / 2, relH, relH);
+      if (rel.h > config.image.size.max) {
+        image(img[this.image], -rel.w / 2, -rel.h / 2, config.image.size.max, config.image.size.max);
+      }
+      else {
+        image(img[this.image], -rel.w / 2, -rel.h / 2, rel.h, rel.h);
+      }
     }
 
     // redraw the stroke only
     noFill();
-    rect(0, 0, relW, relH);
+    rect(0, 0, rel.w, rel.h);
 
-    // set override text properties
+    // set stroke and fill for text
+    fill(this.textColor);
+    noStroke();
+
     if (typeof this.textSize !== "undefined") {
       textSize(this.textSize);
     }
 
-    // if (typeof this.text !== "undefined") {
-    //   text(this.text, 0, this.size.h * ((7 * ch) / 8));
-    // }
+    if (typeof this.text !== "undefined") {
+      text(this.text, 0, -rel.h);
+    }
 
-    // stroke(this.stroke);
-    // fill(this.fill);
-    // text("-", -this.size.w * (cw / 3), 0);
-    // text(this.value, 0, 0);
-    // text("+", this.size.w * (cw / 3), 0);
-    // noFill();
+    if (typeof this.stroke !== "undefined") {
+      stroke(this.stroke);
+    }
+
+    let dFill = config.counter.fill.enabled;
+
+    if (this.disabled) {
+      dFill = config.counter.fill.disabled;
+    }
+    else {
+      text(this.value, 0, 0);
+    }
+
+    fill(dFill);
+    noStroke();
+    rect(0, 0, rel.w, rel.h);
 
     pop();
   }

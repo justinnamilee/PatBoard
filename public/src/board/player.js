@@ -1,32 +1,21 @@
-// define positions and sizes
-let layout, design;
-
 class Player {
-  constructor(c, n) {
-    if (typeof layout === "undefined") {
-      layout = config.layout;
-    }
-
-    if (typeof design === "undefined") {
-      design = config.design;
-    }
-
+  constructor(l, n) {
     this.index = n;
-    this.count = c;
+    this.layout = l;
 
-    this.rotation = layout[c].rotation[n];
+    this.rotation = config.layout[l].rotation[n];
 
-    this.position = Object.assign({}, layout[c].position[n]);
+    this.position = Object.assign({}, config.layout[l].position[n]);
     arr2num(this.position); // encode any fractions
 
-    this.size = Object.assign({}, layout[c].size[n]);
+    this.size = Object.assign({}, config.layout[l].size[n]);
     arr2num(this.size); // encode any fractions
 
     this.color = "#" + Math.floor(Math.random() * 16777215).toString(16);
 
     this.counter = {};
-    for (let k in design) {
-      this.counter[k] = new Counter(design[k]);
+    for (let k in config.counter.design) {
+      this.counter[k] = new Counter(config.counter.design[k]);
     }
 
     this.debug = false;
@@ -41,7 +30,7 @@ class Player {
     angleMode(DEGREES);
     rotate(this.rotation);
 
-    fill(config.playerEnabled);
+    fill(config.player.fill.enabled);
     strokeWeight(3);
     stroke(this.color);
 
@@ -62,11 +51,6 @@ class Player {
     );
 
     pop();
-  }
-
-  setDebug(flag) {
-    this.debug = flag;
-    console.log(this);
   }
 
   setColor(color) {

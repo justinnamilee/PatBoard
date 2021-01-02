@@ -8,8 +8,6 @@ app.use(express.static('public'));
 
 const io = socket(server);
 
-
-
 io.sockets.on('connection', function(s) {
   console.log('New connection from: ' + s.id);
 
@@ -23,3 +21,7 @@ io.sockets.on('connection', function(s) {
     }
   })
 });
+
+// TODO: keep game state here
+// TODO: get data from clients
+// TODO: send data to wallboard? or have wallboard poll on draw cycles

@@ -28,23 +28,23 @@ function setup() {
     }
   }
 
-  // set resolution
-  if (config.screen === "dynamic") {
-    config.resolution.w = windowWidth;
-    config.resolution.h = windowHeight;
-  }
-
   createCanvas(config.resolution.w, config.resolution.h);
 
   // generate play spaces
   for (let i = 0; i < config.players; i++) {
     p.push(new Player(config.players, i));
-    p[i].setDebug(false);
   }
 }
 
 // output to screen
 function draw() {
+  if (config.screen === "dynamic") {
+    config.resolution.w = windowWidth;
+    config.resolution.h = windowHeight;
+
+    createCanvas(config.resolution.w, config.resolution.h);
+  }
+
   background(bg);
 
   for (let player of p) {

@@ -1,238 +1,271 @@
 {
-  "players": 4,
+  "players": "2",
   "debug": true,
   "listen": 8080,
-  "textSize": 36,
-  "playerFill": 255,
-  "enemyDisabled": 127,
-  "enemyEnabled": 255,
-  "playerDisabled": [
-    51,
-    34,
-    12,
-    127
-  ],
-  "playerEnabled": [
-    200,
-    200,
-    200,
-    200
-  ],
   "screen": "dynamic",
   "resolution": {
     "w": 1920,
     "h": 1080
   },
-  "design": {
-    "health": {
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "w": [
-          1,
-          3
-        ],
-        "h": [
-          1,
-          4
-        ]
-      },
-      "textSize": 64,
-      "fill": 255,
-      "image": "health.png"
+  "image": {
+    "size": {
+      "max": 75
+    }
+  },
+  "text": {
+    "color": 0,
+    "size": 36
+  },
+  "player": {
+    "fill": {
+      "base": 255,
+      "disabled": [
+        51,
+        34,
+        12,
+        127
+      ],
+      "enabled": [
+        200,
+        200,
+        200,
+        200
+      ]
+    }
+  },
+  "counter": {
+    "fill": {
+      "base": 255,
+      "disabled": [
+        127,
+        127,
+        127,
+        127
+      ],
+      "enabled": [
+        0,
+        0,
+        0,
+        0
+      ]
     },
-    "eyeball": {
-      "position": {
-        "x": [
-          -2,
-          3
-        ],
-        "y": [
-          3,
-          4
-        ]
+    "design": {
+      "health": {
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "size": {
+          "w": [
+            1,
+            3
+          ],
+          "h": [
+            1,
+            4
+          ]
+        },
+        "textSize": 64,
+        "fill": 255,
+        "image": "health.png"
       },
-      "size": {
-        "w": [
-          1,
-          4
-        ],
-        "h": [
-          1,
-          7
-        ]
+      "eyeball": {
+        "position": {
+          "x": [
+            -2,
+            3
+          ],
+          "y": [
+            3,
+            4
+          ]
+        },
+        "size": {
+          "w": [
+            1,
+            4
+          ],
+          "h": [
+            1,
+            7
+          ]
+        },
+        "fill": 255,
+        "image": "eyeball.png"
       },
-      "fill": 255,
-      "image": "eyeball.png"
-    },
-    "lightning": {
-      "position": {
-        "x": 0,
-        "y": [
-          3,
-          4
-        ]
+      "lightning": {
+        "position": {
+          "x": 0,
+          "y": [
+            3,
+            4
+          ]
+        },
+        "size": {
+          "w": [
+            1,
+            4
+          ],
+          "h": [
+            1,
+            7
+          ]
+        },
+        "fill": 255,
+        "image": "lightning.png"
       },
-      "size": {
-        "w": [
-          1,
-          4
-        ],
-        "h": [
-          1,
-          7
-        ]
+      "horn": {
+        "position": {
+          "x": [
+            2,
+            3
+          ],
+          "y": [
+            3,
+            4
+          ]
+        },
+        "size": {
+          "w": [
+            1,
+            4
+          ],
+          "h": [
+            1,
+            7
+          ]
+        },
+        "fill": 255,
+        "textColor": 0,
+        "image": "horn.png"
       },
-      "fill": 255,
-      "image": "lightning.png"
-    },
-    "horn": {
-      "position": {
-        "x": [
-          2,
-          3
-        ],
-        "y": [
-          3,
-          4
-        ]
+      "enemy1": {
+        "position": {
+          "x": [
+            -2,
+            3
+          ],
+          "y": [
+            -9,
+            16
+          ]
+        },
+        "size": {
+          "w": [
+            1,
+            6
+          ],
+          "h": [
+            1,
+            9
+          ]
+        },
+        "fill": 255,
+        "textSize": 18,
+        "disabled": true,
+        "image": "enemy.png"
       },
-      "size": {
-        "w": [
-          1,
-          4
-        ],
-        "h": [
-          1,
-          7
-        ]
+      "enemy2": {
+        "position": {
+          "x": [
+            -1,
+            3
+          ],
+          "y": [
+            -9,
+            16
+          ]
+        },
+        "size": {
+          "w": [
+            1,
+            6
+          ],
+          "h": [
+            1,
+            9
+          ]
+        },
+        "fill": 255,
+        "textSize": 18,
+        "disabled": true,
+        "image": "enemy.png"
       },
-      "fill": 255,
-      "image": "horn.png"
-    },
-    "enemy1": {
-      "position": {
-        "x": [
-          -2,
-          3
-        ],
-        "y": [
-          -9,
-          16
-        ]
+      "enemy3": {
+        "position": {
+          "x": 0,
+          "y": [
+            -9,
+            16
+          ]
+        },
+        "size": {
+          "w": [
+            1,
+            6
+          ],
+          "h": [
+            1,
+            9
+          ]
+        },
+        "fill": 255,
+        "textSize": 18,
+        "disabled": true,
+        "image": "enemy.png"
       },
-      "size": {
-        "w": [
-          1,
-          6
-        ],
-        "h": [
-          1,
-          9
-        ]
+      "enemy4": {
+        "position": {
+          "x": [
+            1,
+            3
+          ],
+          "y": [
+            -9,
+            16
+          ]
+        },
+        "size": {
+          "w": [
+            1,
+            6
+          ],
+          "h": [
+            1,
+            9
+          ]
+        },
+        "fill": 255,
+        "textSize": 18,
+        "disabled": true,
+        "image": "enemy.png"
       },
-      "fill": 255,
-      "textSize": 18,
-      "image": "enemy.png"
-    },
-    "enemy2": {
-      "position": {
-        "x": [
-          -1,
-          3
-        ],
-        "y": [
-          -9,
-          16
-        ]
-      },
-      "size": {
-        "w": [
-          1,
-          6
-        ],
-        "h": [
-          1,
-          9
-        ]
-      },
-      "fill": 255,
-      "textSize": 18,
-      "image": "enemy.png"
-    },
-    "enemy3": {
-      "position": {
-        "x": 0,
-        "y": [
-          -9,
-          16
-        ]
-      },
-      "size": {
-        "w": [
-          1,
-          6
-        ],
-        "h": [
-          1,
-          9
-        ]
-      },
-      "fill": 255,
-      "textSize": 18,
-      "image": "enemy.png"
-    },
-    "enemy4": {
-      "position": {
-        "x": [
-          1,
-          3
-        ],
-        "y": [
-          -9,
-          16
-        ]
-      },
-      "size": {
-        "w": [
-          1,
-          6
-        ],
-        "h": [
-          1,
-          9
-        ]
-      },
-      "fill": 255,
-      "textSize": 18,
-      "image": "enemy.png"
-    },
-    "enemy5": {
-      "position": {
-        "x": [
-          2,
-          3
-        ],
-        "y": [
-          -9,
-          16
-        ]
-      },
-      "size": {
-        "w": [
-          1,
-          6
-        ],
-        "h": [
-          1,
-          9
-        ]
-      },
-      "fill": 255,
-      "textSize": 18,
-      "image": "enemy.png"
+      "enemy5": {
+        "position": {
+          "x": [
+            2,
+            3
+          ],
+          "y": [
+            -9,
+            16
+          ]
+        },
+        "size": {
+          "w": [
+            1,
+            6
+          ],
+          "h": [
+            1,
+            9
+          ]
+        },
+        "fill": 255,
+        "textSize": 18,
+        "disabled": true,
+        "image": "enemy.png"
+      }
     }
   },
   "layout": {
