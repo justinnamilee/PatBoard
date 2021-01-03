@@ -5,7 +5,7 @@ let img;
 
 // do this before anything else
 function preload() {
-  config = loadJSON("src/config.json");
+  config = loadJSON("src/board/config.json");
   bg = loadImage("assets/carpet.jpg");
   img = {
     "health.png": loadImage("assets/health.png"),
