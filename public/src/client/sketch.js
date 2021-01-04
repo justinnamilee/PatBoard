@@ -1,6 +1,5 @@
-let socket;
-
 let config;
+let socket;
 let data = {}; // my state
 let game = {}; // state according to server
 let design = {}; // holds html items for repositioning
@@ -9,11 +8,6 @@ let changed = false;
 
 function statusAdd(s) {
   status.unshift(s);
-}
-
-function updateData(d) {
-  console.log(d);
-  return undefined;
 }
 
 function socketEmit(t, d) {
@@ -71,8 +65,7 @@ function setup() {
       data.name = nameInput.value();
       nameInput.value("");
 
-      if (typeof data.room !== "undefined")
-      {
+      if (typeof data.room !== "undefined") {
         socketEmit("change", data);
       }
     }
@@ -84,18 +77,27 @@ function setup() {
   joinButton.mousePressed(function () {
     if (typeof data.room === "undefined") {
       if (roomInput.value() !== "" && roomInput.value() !== config.design.join.default && typeof data.name !== "undefined") {
+        // * join room logic
         data.room = roomInput.value();
         statusAdd("You joined " + data.room + "!");
+
         roomInput.value("");
         roomInput.hide();
         joinButton.html(config.design.join.text_alt);
 
         socketEmit("join", data);
-        socket.on(data.room, (d) => updateData(d));
+
+        socket.on(data.room, function (d) {
+          // * update game data
+          // TODO: write this
+        });
       }
     } else {
+      // * quit room logic
       statusAdd("You left " + data.room + "!");
+
       socket.off(data.room);
+
       roomInput.value(config.design.join.default);
       roomInput.show();
       joinButton.html(config.design.join.text);
@@ -128,6 +130,7 @@ function setup() {
         joinButton.show();
         roomInput.show();
       });
+
       socket.on('disconnect', () => statusAdd("Disconnected from server, boo."));
 
       connectButton.hide();
@@ -170,8 +173,9 @@ function draw() {
   );
 
   // debug stuff
+  text(`P:${typeof data.name === "undefined" ? "?" : data.name} R:${typeof data.room === "undefined" ? "?" : data.room} I:${typeof socket === "undefined" ? "?" : socket.id}`, 0, windowHeight);
 
-
+  // bounding box
   noFill();
   stroke(config.design.status.fill);
   strokeWeight(1);

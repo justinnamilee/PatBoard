@@ -5,8 +5,8 @@
   "debug": false,
   "data": {
     "player": 0,
-    "playerName": "Butthead",
-    "playerID": "",
+    "name": "Butthead",
+    "room": "",
     "health": 30,
     "eyeball": 0,
     "lightning": 0,
