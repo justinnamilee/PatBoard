@@ -5,6 +5,7 @@ let game = {}; // state according to server
 let design = {}; // holds html items for repositioning
 let status = ["Welcome!"];
 let connect = false;
+let sync = true;
 
 
 // ! //////////////
@@ -30,6 +31,16 @@ function socketEmit(t, d) {
   }
 }
 
+function k2t(k) {
+  let c = "?";
+
+  if (typeof k !== "undefined") {
+    c = k.toString();
+  }
+
+  return (c);
+}
+
 function d2pr(d) {
   return (d.room + "::" + d.name);
 }
@@ -38,7 +49,6 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   statusAdd("Window resized to " + windowWidth + "x" + windowHeight + ".");
   design.nameInput.position(config.design.name.position.x * windowWidth, config.design.name.position.y * windowHeight);
-  design.submitButton.position(design.nameInput.x + design.nameInput.width, config.design.name.position.y * windowHeight);
   design.joinButton.position(config.design.join.position.x * windowWidth - design.joinButton.width, config.design.join.position.y * windowHeight);
   design.roomInput.position(config.design.join.position.x * windowWidth - design.roomInput.width - design.joinButton.width, config.design.join.position.y * windowHeight);
   design.connectButton.position(config.design.connect.position.x * windowWidth - design.connectButton.width - design.roomInput.width - design.joinButton.width, config.design.join.position.y * windowHeight);
@@ -52,6 +62,18 @@ function windowResized() {
 // ! THESE ARE BUTTON LOGICS
 
 function joinRoom() {
+  if (design.nameInput.value() !== "" && design.nameInput.value() !== config.design.name.default) {
+    if (typeof data.name === "undefined") {
+      statusAdd("You set your name to " + design.nameInput.value() + "!");
+    }
+    else {
+      statusAdd("You changed your name from " + data.name + " to " + design.nameInput.value() + "!");
+    }
+
+    data.name = design.nameInput.value();
+    design.nameInput.value(config.design.name.default);
+  }
+
   if (design.roomInput.value() !== "" && design.roomInput.value() !== config.design.join.default && typeof data.name !== "undefined") {
     // * join room logic
     data.room = design.roomInput.value();
@@ -61,16 +83,31 @@ function joinRoom() {
     design.roomInput.hide();
     design.joinButton.html(config.design.join.text_alt);
     design.nameInput.hide();
-    design.submitButton.hide();
 
     socketEmit("join", data);
 
     // * server is talking to the room
-    socket.on(data.room, function (d) {
+    socket.on(data.room, function (c, d) {
       // * update game data
-      // TODO: write this
-      statusAdd("server is talking to us!!");
-      console.log(d);
+      if (typeof c === "object") {
+        if (sync && typeof c.data[data.name] === "object") {
+          sync = false;
+          data = Object.assign({}, c.data[data.name]);
+        } else {
+          for (let p of c.data) {
+            if (p !== data.name) {
+              game[p] = c.data[p];
+            }
+          }
+        }
+      } else {
+        if (c === "kick") {
+          statusAdd("All were kicked: " + d);
+          quitRoom();
+        } else if (c === "message") {
+          statusAdd("From server: ", d);
+        }
+      }
     });
 
     // * server is talking to us in this room only
@@ -95,7 +132,6 @@ function quitRoom() {
   design.roomInput.show();
   design.joinButton.html(config.design.join.text);
   design.nameInput.show();
-  design.submitButton.show();
 
   socketEmit("leave", data);
 
@@ -124,26 +160,12 @@ function connectServer() {
     });
 
     design.nameInput.show();
-    design.submitButton.show();
     design.joinButton.show();
     design.roomInput.show();
     design.connectButton.hide();
   }
 }
 
-function submitName() {
-  if (design.nameInput.value() !== "" && design.nameInput.value() !== config.design.status.default) {
-    if (typeof data.name === "undefined") {
-      statusAdd("You set your name to " + design.nameInput.value() + "!");
-    }
-    else {
-      statusAdd("You changed your name from " + data.name + " to " + design.nameInput.value() + "!");
-    }
-
-    data.name = design.nameInput.value();
-    design.nameInput.value(config.design.name.default);
-  }
-}
 
 // ! END OF BUTTON LOGICS
 // ! ////////////////////
@@ -176,10 +198,10 @@ function setup() {
   nameInput.hide();
   nameInput.value(config.design.name.default);
 
-  let submitButton = createButton(config.design.name.text);
-  design.submitButton = submitButton;
-  submitButton.hide();
-  submitButton.mousePressed(submitName);
+  let roomInput = createInput();
+  design.roomInput = roomInput;
+  roomInput.hide();
+  roomInput.value(config.design.join.default);
 
   let joinButton = createButton(config.design.join.text);
   design.joinButton = joinButton;
@@ -191,11 +213,6 @@ function setup() {
       quitRoom();
     }
   });
-
-  let roomInput = createInput();
-  design.roomInput = roomInput;
-  roomInput.hide();
-  roomInput.value(config.design.join.default);
 
   let connectButton = createButton(config.design.connect.text);
   design.connectButton = connectButton;
@@ -229,7 +246,7 @@ function draw() {
   );
 
   // debug stuff
-  text(`P:${typeof data.name === "undefined" ? "?" : data.name} R:${typeof data.room === "undefined" ? "?" : data.room} I:${typeof socket === "undefined" ? "?" : socket.id}`, 0, windowHeight);
+  text(`P:${k2t(data.name)} R:${k2t(data.room)} N:${k2t(data.player)}`, 0, windowHeight);
 
   // bounding box
   noFill();
