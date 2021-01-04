@@ -2,6 +2,7 @@
   "listen": 8080,
   "minPlayers": 2,
   "maxPlayers": 6,
+  "meta": "__meta",
   "debug": false,
   "data": {
     "player": 0,

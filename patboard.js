@@ -7,29 +7,61 @@ const g = {};
 
 app.use(express.static("public"));
 
-io.sockets.on("connection", function(s) {
-  console.log("New connection from: " + s.id);
+function d2rp(d) {
+  return (d.room + "::" + d.name);
+}
 
-  // handler for incoming data
-  s.on("change", function(d) {
-    s.broadcast.emit(d.room, d);
+io.sockets.on("connection", function (s) {
+  console.log("Client " + s.id + " has connected.");
 
-    console.log("New data from: " + s.id + ": " + d);
+  // disconnect
+  s.on("disconnect", function () {
+    console.log("Client " + s.id + " has disconnected.");
   });
 
   // handler for room join
-  s.on("join", function(d) {
-    console.log(d);
+  s.on("join", function (d) {
+    console.log("Client " + s.id + " wants to join " + d.room + " as " + d.name + ".");
 
-    // ! look for room
-    // ! create one if not
-    // ! add this player to room
-    // ! emit to room?
+    if (d.name === config.meta) {
+      // * invalid user name
+      s.emit(d2rp(d), "kick", "Invalid name '" + config.meta + "', choose another.");
+    } else {
+      // * make the room if it doesn't exist
+      if (!(d.room in g)) {
+        g[d.room] = {};
+        g[d.room][config.meta] = {};
+      }
+
+      // * try to join the room
+      if (d.name in g[d.room]) {
+        // * client is rejoining without (quit)
+        s.emit(d.room, g[d.room]);
+      } else if (Object.keys(g[d.room]).length - 1 >= maxPlayers) {
+        // * client trying to join a full room
+        s.emit(d2rp(d), "kick", "The room is full.");
+      } else {
+        // * put client in the room
+        g[d.room][d.name] = d;
+        s.emit(d.room, g[d.room]);
+      }
+    }
   });
 
   // handler for room leave
-  s.on("leave", function(d) {
-    console.log(d);
+  s.on("leave", function (d) {
+    console.log("Client " + s.id + " wants to leave join " + d.room + " as " + d.name + ".");
+
+    if (d.name in g[d.room]) {
+      delete (g[d.room][d.name]);
+    }
+
+    emit(d.room, g[d.room]);
+  });
+
+  // handler for value changes
+  s.on("update", function (d) {
+    // ! put new values into
   });
 });
 
