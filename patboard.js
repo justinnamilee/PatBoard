@@ -37,7 +37,7 @@ io.sockets.on("connection", function (s) {
       if (d.name in g[d.room]) {
         // * client is rejoining without (quit)
         s.emit(d.room, g[d.room]);
-      } else if (Object.keys(g[d.room]).length - 1 >= maxPlayers) {
+      } else if (Object.keys(g[d.room]).length - 1 >= config.maxPlayers) {
         // * client trying to join a full room
         s.emit(d2rp(d), "kick", "The room is full.");
       } else {
@@ -52,11 +52,10 @@ io.sockets.on("connection", function (s) {
   s.on("leave", function (d) {
     console.log("Client " + s.id + " wants to leave join " + d.room + " as " + d.name + ".");
 
-    if (d.name in g[d.room]) {
+    if (d.room in g && d.name in g[d.room]) {
       delete (g[d.room][d.name]);
+      emit(d.room, g[d.room]);
     }
-
-    emit(d.room, g[d.room]);
   });
 
   // handler for value changes
