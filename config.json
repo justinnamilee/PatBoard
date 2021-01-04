@@ -1,8 +1,6 @@
 {
   "listen": 8080,
-  "minPlayers": 2,
-  "maxPlayers": 6,
-  "meta": "__meta",
+  "metaTag": "__meta",
   "debug": false,
   "data": {
     "player": 0,
@@ -17,5 +15,15 @@
     "enemy3": 0,
     "enemy4": 0,
     "enemy5": 0
+  },
+  "meta": {
+    "pool": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": ""
+    }
   }
 }
