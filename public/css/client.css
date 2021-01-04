@@ -5,3 +5,9 @@ html, body {
 canvas {
   display: block;
 }
+h2 {
+  color: white;
+}
+input, button {
+  font-size: large;
+}

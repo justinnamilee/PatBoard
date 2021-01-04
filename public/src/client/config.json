@@ -1,0 +1,54 @@
+{
+  "listen": "10.6.6.160:8080",
+  "framerate": 10,
+  "defaultEmit": "change",
+  "text": {
+    "size": 36
+  },
+  "design": {
+    "name": {
+      "position": {
+        "x": 0.01,
+        "y": 0.01
+      },
+      "text": "Submit",
+      "default": "Enter your name..."
+    },
+    "join": {
+      "position": {
+        "x": 0.99,
+        "y": 0.01
+      },
+      "text": "Join",
+      "text_alt": "Quit",
+      "default": "Enter a room..."
+    },
+    "connect": {
+      "position": {
+        "x": 0.99,
+        "y": 0.01
+      },
+      "text": "Connect"
+    },
+    "status": {
+      "position": {
+        "x": 0.1,
+        "y": 0.8
+      },
+      "size": {
+        "w": 0.8,
+        "h": 0.1
+      },
+      "fill": 255,
+      "buffer": 2,
+      "textSize": 14,
+      "maxSize": 10
+    },
+    "chat": {
+      "position": {
+        "x": 0.1,
+        "y": 0.8
+      }
+    }
+  }
+}
