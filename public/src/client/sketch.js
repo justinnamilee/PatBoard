@@ -4,7 +4,7 @@ let data = {}; // my state
 let game = {}; // state according to server
 let design = {}; // holds html items for repositioning
 let status = ["Welcome!"];
-let changed = false;
+let connect = false;
 
 
 // ! //////////////
@@ -70,6 +70,7 @@ function joinRoom() {
       // * update game data
       // TODO: write this
       statusAdd("server is talking to us!!");
+      console.log(d);
     });
 
     // * server is talking to us in this room only
@@ -77,6 +78,8 @@ function joinRoom() {
       if (c === "kick") {
         statusAdd("You were kicked: " + d);
         quitRoom();
+      } else if (c === "message") {
+        statusAdd("PM from server: " + d);
       }
     });
   }
@@ -106,17 +109,24 @@ function connectServer() {
 
     socket = io.connect(config.listen);
 
-    socket.on('connect', function () {
+    socket.on("connect", function () {
       statusAdd("Connected to server " + config.listen + ", nice!  ID: " + socket.id);
-
-      design.nameInput.show();
-      design.submitButton.show();
-      design.joinButton.show();
-      design.roomInput.show();
+      connected = true;
     });
 
-    socket.on('disconnect', () => statusAdd("Disconnected from server, boo."));
+    socket.on("disconnect", function () {
+      statusAdd("Disconnected from server, boo.");
+      connected = false;
+    });
 
+    socket.on("status", function (s) {
+      statusAdd("From server: " + s)
+    });
+
+    design.nameInput.show();
+    design.submitButton.show();
+    design.joinButton.show();
+    design.roomInput.show();
     design.connectButton.hide();
   }
 }
