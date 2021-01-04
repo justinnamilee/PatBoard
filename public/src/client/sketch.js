@@ -15,6 +15,7 @@ function statusAdd(s) {
   status.unshift(s);
 }
 
+
 function socketEmit(t, d) {
   if (typeof d === "undefined") {
     d = data;
@@ -31,6 +32,7 @@ function socketEmit(t, d) {
   }
 }
 
+
 function k2t(k) {
   let c = "?";
 
@@ -41,9 +43,11 @@ function k2t(k) {
   return (c);
 }
 
+
 function d2pr(d) {
   return (d.room + "::" + d.name);
 }
+
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
@@ -93,11 +97,14 @@ function joinRoom() {
         if (sync && typeof c.data[data.name] === "object") {
           sync = false;
           data = Object.assign({}, c.data[data.name]);
-        } else {
-          for (let p of c.data) {
-            if (p !== data.name) {
+        }
+
+        if (typeof c.data === "object") {
+          for (let p in c.data) {
+            console.log("Game state updated.");
+            //if (p !== data.name) {
               game[p] = c.data[p];
-            }
+            //}
           }
         }
       } else {
@@ -122,6 +129,7 @@ function joinRoom() {
   }
 }
 
+
 function quitRoom() {
   statusAdd("You left " + data.room + "!");
 
@@ -137,7 +145,9 @@ function quitRoom() {
 
   data = { name: data.name };
   game = {};
+  sync = true;
 }
+
 
 function connectServer() {
   if (typeof socket === "undefined") {
@@ -177,6 +187,7 @@ function connectServer() {
 function preload() {
   config = loadJSON("src/client/config.json");
 }
+
 
 function setup() {
   // load override paramters & update
@@ -222,6 +233,18 @@ function setup() {
   windowResized();
 }
 
+
+function keyTyped() {
+  if (key === 'h') {
+    data.health--;
+    socket.emit("update", data);
+  } else if (key === 'H') {
+    data.health++;
+    socket.emit("update", data);
+  }
+
+  console.log(key);
+}
 
 
 function draw() {

@@ -106,18 +106,18 @@ io.sockets.on("connection", function (s) {
   s.on("leave", function (d) {
     console.log("Client " + s.id + " wants to leave " + d.room + " as " + d.name + ".");
 
-    if (d.room in g && d.name in g[d.room]) {
+    if (d.room in g && d.name in g[d.room].data) {
       poolRemove(g[d.room], d.name);
-      delete g[d.room][d.name];
+      delete g[d.room].data[d.name];
       s.emit(d.room, g[d.room]);
     }
   });
 
   // handler for value changes
   s.on("update", function (d) {
-    if (d.room in q && d.name in g[d.room]) {
+    if (d.room in g && d.name in g[d.room].data) {
       d2g(d); // ingest data
-      s.broadcast.emit(d.room + "::__meta::wallboard", g[d.room]);
+      s.emit(d.room, g[d.room]);
       console.log("Updated room '" + d.room +"'.");
     } else {
       s.emit(d2rp(d), "kick", "You are in an abandoned room / not joined to this room.");
