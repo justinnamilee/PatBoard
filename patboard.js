@@ -53,6 +53,11 @@ function poolRemove(r, n) {
 // ! // END pools~ //
 // ! //
 
+// * make sure we refresh wallboards
+setInterval(function() {
+  io.sockets.emit("session", Object.keys(g));
+}, 5000);
+
 
 // * setup express server
 app.use(express.static("public"));
@@ -89,15 +94,18 @@ io.sockets.on("connection", function (s) {
         // * client is rejoining without (quit)
         s.emit(d.room, g[d.room]);
 
+        io.sockets.emit("session", Object.keys(g));
       } else if (!(d.name in g[d.room].data) && Object.keys(g[d.room].data).length - 1 >= Object.keys(config.meta.pool).length) {
         // * client trying to join a full room
         s.emit(d2rp(d), "kick", "The room is full.");
 
+        io.sockets.emit("session", Object.keys(g));
       } else {
         // * put client in the room
         d2g(d); // ingest data
         poolAdd(g[d.room], d.name);
         io.sockets.emit(d.room, g[d.room]);
+        io.sockets.emit("session", Object.keys(g));
 
         console.log("Adding client " + d.name + " to room " + d.room + ".");
       }
@@ -113,6 +121,8 @@ io.sockets.on("connection", function (s) {
       delete g[d.room].data[d.name];
       io.sockets.emit(d.room, g[d.room]);
     }
+
+    io.sockets.emit("session", Object.keys(g));
   });
 
   // handler for value changes
@@ -120,7 +130,7 @@ io.sockets.on("connection", function (s) {
     if (d.room in g && d.name in g[d.room].data) {
       d2g(d); // ingest data
       s.emit(d.room, g[d.room]);
-      console.log("Updated room '" + d.room +"'.");
+      console.log(d.room, g[d.room]);
     } else {
       s.emit(d2rp(d), "kick", "You are in an abandoned room / not joined to this room.");
     }

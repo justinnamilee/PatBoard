@@ -3,6 +3,7 @@ let config;
 let socket;
 let bg;
 let img;
+let ui = {};
 let list = [];
 let room = "PatBoard.js";
 
@@ -18,8 +19,37 @@ function populate(r) {
       let index = parseInt(p);
 
       for (let c in config.design) {
+        console.log(p, c, r.data[r.meta.pool[p]][c]);
         p[index].counter[c].value = r.data[r.meta.pool[p]][c];
       }
+    }
+  }
+}
+
+
+// helper for callbacks
+function resetLayout() {
+  for (let player of p) {
+    player.setLayout(config.board, player.index);
+  }
+}
+
+
+function checkRoom() {
+  [r, t] = ui.roomSelect.value().split(" :: ", 2);
+
+  if (typeof r !== "undefined") {
+    if (r !== "" && list.find(e => e === r)) {
+      // ! change all of this vvv lmao
+      ui.roomSelect.value(r + " :: connected"); // TODO: move to config
+      if (room !== r) {
+        socket.off(room);
+        console.log(`Changed room from ${room} to ${r}.`);
+        room = r;
+        socket.on(room, populate);
+      }
+    } else {
+      ui.roomSelect.value(r);
     }
   }
 }
@@ -44,28 +74,6 @@ function preload() {
   };
 }
 
-// helper for callbacks
-function resetLayout() {
-  for (let player of p) {
-    player.setLayout(config.board, player.index);
-  }
-}
-
-function checkRoom(i) {
-  [r, t] = i.value().split(" :: ", 2);
-
-  if (typeof r !== "undefined") {
-    if (r !== "" && typeof list.find(e => r)) {
-      i.value(r + " :: connected"); // TODO: move to config
-
-      if (room !== r) {
-        console.log(`Changef room from ${room} to ${r}.`);
-
-        room = r;
-      }
-    }
-  }
-}
 
 // one-time setup
 function setup() {
@@ -85,7 +93,7 @@ function setup() {
 
   // add selector
   let boardSelect = createSelect();
-  boardSelect.position(config.select.position.x, config.select.position.y);
+  ui.boardSelect = boardSelect;
 
   for (let l in config.layout) {
     boardSelect.option(l);
@@ -101,11 +109,8 @@ function setup() {
 
   // room selector
   let roomSelect = createInput();
-  roomSelect.position(config.room.position.x, config.room.position.y + boardSelect.height);
+  ui.roomSelect = roomSelect;
   roomSelect.value(room);
-  roomSelect.input(function () {
-    checkRoom(roomSelect);
-  });
 
   // capture room list data & game data
   socket = io.connect(config.listen);
@@ -119,12 +124,11 @@ function setup() {
   });
 
   socket.on("status", function () {
-    checkRoom(roomSelect);
   });
 
   socket.on("session", function (l) {
     list = l;
-    checkRoom(roomSelect);
+    checkRoom();
   });
 
   // data from client
@@ -139,11 +143,22 @@ function setup() {
     }
   }
 
-
+  windowResized();
 }
+
+function windowResized() {
+  ui.roomSelect.position(config.room.position.x, config.room.position.y);
+  ui.boardSelect.position(config.select.position.x + ui.roomSelect.width, config.select.position.y);
+}
+
+
 
 // output to screen
 function draw() {
+  if (typeof p !== "undefined") {
+    p[0].health++;
+  }
+
   if (config.screen === "dynamic" && windowWidth !== config.resolution.w && windowHeight !== config.resolution.h) {
     config.resolution.w = windowWidth;
     config.resolution.h = windowHeight;
