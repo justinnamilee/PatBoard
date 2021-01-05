@@ -132,13 +132,8 @@ io.sockets.on("connection", function (s) {
     if (d.room in g && d.name in g[d.room].data) {
       d2g(d); // ingest data
       io.sockets.emit(d.room, g[d.room]);
-      console.log(d.room, g[d.room]);
     } else {
       s.emit(d2rp(d), "kick", "You are in an abandoned room / not joined to this room.");
     }
   });
 });
-
-// TODO: keep game state here
-// TODO: get data from clients
-// TODO: send data to wallboard? or have wallboard poll on draw cycles

@@ -5,55 +5,57 @@
   "text": {
     "size": 36
   },
-  "design": {
-    "name": {
-      "position": {
-        "x": 0.01,
-        "y": 0.01
+  "ui": {
+    "design": {
+      "name": {
+        "position": {
+          "x": 0.01,
+          "y": 0.01
+        },
+        "text": "Submit",
+        "default": "Enter your name..."
       },
-      "text": "Submit",
-      "default": "Enter your name..."
-    },
-    "join": {
-      "position": {
-        "x": 0.99,
-        "y": 0.01
+      "join": {
+        "position": {
+          "x": 0.99,
+          "y": 0.01
+        },
+        "text": "Join",
+        "text_alt": "Quit",
+        "default": "Enter a room..."
       },
-      "text": "Join",
-      "text_alt": "Quit",
-      "default": "Enter a room..."
-    },
-    "connect": {
-      "position": {
-        "x": 0.99,
-        "y": 0.01
+      "connect": {
+        "position": {
+          "x": 0.99,
+          "y": 0.01
+        },
+        "text": "Connect"
       },
-      "text": "Connect"
-    },
-    "status": {
-      "position": {
-        "x": 0.1,
-        "y": 0.6
+      "status": {
+        "position": {
+          "x": 0.1,
+          "y": 0.6
+        },
+        "size": {
+          "w": 0.8,
+          "h": 0.3
+        },
+        "fill": 255,
+        "buffer": 2,
+        "textSize": 14,
+        "maxSize": 30
       },
-      "size": {
-        "w": 0.8,
-        "h": 0.3
+      "control": {
+        "position": {
+          "x": 0.1,
+          "y": 0.6
+        }
       },
-      "fill": 255,
-      "buffer": 2,
-      "textSize": 14,
-      "maxSize": 30
-    },
-    "control": {
-      "position": {
-        "x": 0.1,
-        "y": 0.6
-      }
-    },
-    "chat": {
-      "position": {
-        "x": 0.1,
-        "y": 0.8
+      "chat": {
+        "position": {
+          "x": 0.1,
+          "y": 0.8
+        }
       }
     }
   }

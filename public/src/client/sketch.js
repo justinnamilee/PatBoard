@@ -52,11 +52,11 @@ function d2pr(d) {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
   statusAdd("Window resized to " + windowWidth + "x" + windowHeight + ".");
-  design.nameInput.position(config.design.name.position.x * windowWidth, config.design.name.position.y * windowHeight);
-  design.joinButton.position(config.design.join.position.x * windowWidth - design.joinButton.width, config.design.join.position.y * windowHeight);
-  design.roomInput.position(config.design.join.position.x * windowWidth - design.roomInput.width - design.joinButton.width, config.design.join.position.y * windowHeight);
-  design.connectButton.position(config.design.connect.position.x * windowWidth - design.connectButton.width - design.roomInput.width - design.joinButton.width, config.design.join.position.y * windowHeight);
-  design.controlInput.position(config.design.control.position.x * windowWidth + design.controlInput.width / 2, config.design.control.position.y * windowHeight - (4 * design.controlInput.height / 3));
+  design.nameInput.position(config.ui.design.name.position.x * windowWidth, config.ui.design.name.position.y * windowHeight);
+  design.joinButton.position(config.ui.design.join.position.x * windowWidth - design.joinButton.width, config.ui.design.join.position.y * windowHeight);
+  design.roomInput.position(config.ui.design.join.position.x * windowWidth - design.roomInput.width - design.joinButton.width, config.ui.design.join.position.y * windowHeight);
+  design.connectButton.position(config.ui.design.connect.position.x * windowWidth - design.connectButton.width - design.roomInput.width - design.joinButton.width, config.ui.design.join.position.y * windowHeight);
+  design.controlInput.position(config.ui.design.control.position.x * windowWidth + design.controlInput.width / 2, config.ui.design.control.position.y * windowHeight - (4 * design.controlInput.height / 3));
 }
 
 // ! end of misc
@@ -67,7 +67,7 @@ function windowResized() {
 // ! THESE ARE BUTTON LOGICS
 
 function joinRoom() {
-  if (design.nameInput.value() !== "" && design.nameInput.value() !== config.design.name.default) {
+  if (design.nameInput.value() !== "" && design.nameInput.value() !== config.ui.design.name.default) {
     if (typeof data.name === "undefined") {
       statusAdd("You set your name to " + design.nameInput.value() + "!");
     }
@@ -76,17 +76,17 @@ function joinRoom() {
     }
 
     data.name = design.nameInput.value();
-    design.nameInput.value(config.design.name.default);
+    design.nameInput.value(config.ui.design.name.default);
   }
 
-  if (design.roomInput.value() !== "" && design.roomInput.value() !== config.design.join.default && typeof data.name !== "undefined") {
+  if (design.roomInput.value() !== "" && design.roomInput.value() !== config.ui.design.join.default && typeof data.name !== "undefined") {
     // * join room logic
     data.room = design.roomInput.value();
     statusAdd("You joined " + data.room + "!");
 
     design.roomInput.value("");
     design.roomInput.hide();
-    design.joinButton.html(config.design.join.text_alt);
+    design.joinButton.html(config.ui.design.join.text_alt);
     design.nameInput.hide();
 
     socketEmit("join", data);
@@ -137,9 +137,9 @@ function quitRoom() {
   socket.off(data.room);
   socket.off(d2pr(data));
 
-  design.roomInput.value(config.design.join.default);
+  design.roomInput.value(config.ui.design.join.default);
   design.roomInput.show();
-  design.joinButton.html(config.design.join.text);
+  design.joinButton.html(config.ui.design.join.text);
   design.nameInput.show();
 
   socketEmit("leave", data);
@@ -208,14 +208,14 @@ function setup() {
   let nameInput = createInput();
   design.nameInput = nameInput;
   nameInput.hide();
-  nameInput.value(config.design.name.default);
+  nameInput.value(config.ui.design.name.default);
 
   let roomInput = createInput();
   design.roomInput = roomInput;
   roomInput.hide();
-  roomInput.value(config.design.join.default);
+  roomInput.value(config.ui.design.join.default);
 
-  let joinButton = createButton(config.design.join.text);
+  let joinButton = createButton(config.ui.design.join.text);
   design.joinButton = joinButton;
   joinButton.hide();
   joinButton.mousePressed(function () {
@@ -226,7 +226,7 @@ function setup() {
     }
   });
 
-  let connectButton = createButton(config.design.connect.text);
+  let connectButton = createButton(config.ui.design.connect.text);
   design.connectButton = connectButton;
   connectButton.mousePressed(connectServer);
 
@@ -254,21 +254,21 @@ function draw() {
   background(0);
 
   // draw status window
-  fill(config.design.status.fill);
+  fill(config.ui.design.status.fill);
   noStroke();
 
-  if (status.length > config.design.status.maxSize) {
+  if (status.length > config.ui.design.status.maxSize) {
     status.pop();
   }
 
-  textSize(config.design.status.textSize);
+  textSize(config.ui.design.status.textSize);
 
   text(
     status.map(t => ">> " + t).join("\n"),
-    windowWidth * config.design.status.position.x,
-    windowHeight * config.design.status.position.y,
-    windowWidth * config.design.status.size.w,
-    windowHeight * config.design.status.size.h
+    windowWidth * config.ui.design.status.position.x,
+    windowHeight * config.ui.design.status.position.y,
+    windowWidth * config.ui.design.status.size.w,
+    windowHeight * config.ui.design.status.size.h
   );
 
   // debug stuff
@@ -276,14 +276,14 @@ function draw() {
 
   // bounding box
   noFill();
-  stroke(config.design.status.fill);
+  stroke(config.ui.design.status.fill);
   strokeWeight(1);
 
   rect(
-    windowWidth * config.design.status.position.x - config.design.status.buffer,
-    windowHeight * config.design.status.position.y - config.design.status.buffer,
-    windowWidth * (config.design.status.size.w) + config.design.status.buffer,
-    windowHeight * (config.design.status.size.h) + config.design.status.buffer
+    windowWidth * config.ui.design.status.position.x - config.ui.design.status.buffer,
+    windowHeight * config.ui.design.status.position.y - config.ui.design.status.buffer,
+    windowWidth * (config.ui.design.status.size.w) + config.ui.design.status.buffer,
+    windowHeight * (config.ui.design.status.size.h) + config.ui.design.status.buffer
   );
 
   // control
@@ -296,8 +296,8 @@ function draw() {
 
     text(
       "Command Box",
-      windowWidth * config.design.control.position.x,
-      windowHeight * config.design.control.position.y - design.controlInput.height
+      windowWidth * config.ui.design.control.position.x,
+      windowHeight * config.ui.design.control.position.y - design.controlInput.height
     );
 
     pop();
