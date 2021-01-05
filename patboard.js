@@ -80,6 +80,8 @@ io.sockets.on("connection", function (s) {
         g[d.room] = { data: {} };
         g[d.room][config.metaTag] = JSON.parse(JSON.stringify(config.meta));
         g[d.room][config.metaTag].name = d.room;
+
+        io.sockets.emit("session", Object.keys(g));
       }
 
       // * try to join the room
@@ -95,7 +97,7 @@ io.sockets.on("connection", function (s) {
         // * put client in the room
         d2g(d); // ingest data
         poolAdd(g[d.room], d.name);
-        s.emit(d.room, g[d.room]);
+        io.sockets.emit(d.room, g[d.room]);
 
         console.log("Adding client " + d.name + " to room " + d.room + ".");
       }
@@ -109,7 +111,7 @@ io.sockets.on("connection", function (s) {
     if (d.room in g && d.name in g[d.room].data) {
       poolRemove(g[d.room], d.name);
       delete g[d.room].data[d.name];
-      s.emit(d.room, g[d.room]);
+      io.sockets.emit(d.room, g[d.room]);
     }
   });
 

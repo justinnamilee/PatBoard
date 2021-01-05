@@ -1,9 +1,15 @@
 {
   "board": "2 Long",
   "debug": true,
-  "listen": 8080,
+  "listen": "127.0.0.1:8080",
   "screen": "dynamic",
   "select": {
+    "position": {
+      "x": 5,
+      "y": 5
+    }
+  },
+  "room": {
     "position": {
       "x": 5,
       "y": 5

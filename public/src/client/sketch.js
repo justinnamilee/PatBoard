@@ -4,7 +4,7 @@ let data = {}; // my state
 let game = {}; // state according to server
 let design = {}; // holds html items for repositioning
 let status = ["Welcome!"];
-let connect = false;
+let connected = false;
 let sync = true;
 
 
@@ -56,6 +56,7 @@ function windowResized() {
   design.joinButton.position(config.design.join.position.x * windowWidth - design.joinButton.width, config.design.join.position.y * windowHeight);
   design.roomInput.position(config.design.join.position.x * windowWidth - design.roomInput.width - design.joinButton.width, config.design.join.position.y * windowHeight);
   design.connectButton.position(config.design.connect.position.x * windowWidth - design.connectButton.width - design.roomInput.width - design.joinButton.width, config.design.join.position.y * windowHeight);
+  design.controlInput.position(config.design.control.position.x * windowWidth + design.controlInput.width / 2, config.design.control.position.y * windowHeight - (4 * design.controlInput.height / 3));
 }
 
 // ! end of misc
@@ -103,7 +104,7 @@ function joinRoom() {
           for (let p in c.data) {
             console.log("Game state updated.");
             //if (p !== data.name) {
-              game[p] = c.data[p];
+            game[p] = c.data[p];
             //}
           }
         }
@@ -229,6 +230,10 @@ function setup() {
   design.connectButton = connectButton;
   connectButton.mousePressed(connectServer);
 
+  let controlInput = createInput();
+  design.controlInput = controlInput;
+  controlInput.hide();
+
   // fit to window
   windowResized();
 }
@@ -242,8 +247,6 @@ function keyTyped() {
     data.health++;
     socket.emit("update", data);
   }
-
-  console.log(key);
 }
 
 
@@ -282,4 +285,23 @@ function draw() {
     windowWidth * (config.design.status.size.w) + config.design.status.buffer,
     windowHeight * (config.design.status.size.h) + config.design.status.buffer
   );
+
+  // control
+  if (connected) {
+    design.controlInput.show();
+    design.controlInput.value("");
+
+    push();
+    textAlign(LEFT, TOP);
+
+    text(
+      "Command Box",
+      windowWidth * config.design.control.position.x,
+      windowHeight * config.design.control.position.y - design.controlInput.height
+    );
+
+    pop();
+  } else {
+    design.controlInput.hide();
+  }
 }

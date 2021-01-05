@@ -33,16 +33,22 @@
     "status": {
       "position": {
         "x": 0.1,
-        "y": 0.8
+        "y": 0.6
       },
       "size": {
         "w": 0.8,
-        "h": 0.1
+        "h": 0.3
       },
       "fill": 255,
       "buffer": 2,
       "textSize": 14,
-      "maxSize": 10
+      "maxSize": 30
+    },
+    "control": {
+      "position": {
+        "x": 0.1,
+        "y": 0.6
+      }
     },
     "chat": {
       "position": {
