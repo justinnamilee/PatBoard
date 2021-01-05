@@ -53,6 +53,7 @@ function poolRemove(r, n) {
 // ! // END pools~ //
 // ! //
 
+
 // * make sure we refresh wallboards
 setInterval(function() {
   io.sockets.emit("session", Object.keys(g));

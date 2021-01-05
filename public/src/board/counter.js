@@ -23,7 +23,7 @@ class Counter {
 
     translate(this.position.x * (cw / 2), this.position.y * (ch / 2));
     rectMode(CENTER);
-    textSize(config.textSize); // default size
+    textSize(sze2fnt(config.text.size)); // default size
     textAlign(CENTER, CENTER);
 
     let rel = {
@@ -35,19 +35,41 @@ class Counter {
     fill(this.fill);
     rect(0, 0, rel.w, rel.h);
 
+    let imageSize = 0;
+
     if (typeof this.image !== "undefined") {
+      let x, y, h, w;
+
       if (rel.h > config.image.size.max) {
         imageMode(CENTER);
-        image(img[this.image], (config.image.size.max - rel.w) / 2, 0, config.image.size.max, config.image.size.max);
+        x = (config.image.size.max - rel.w) / 2;
+        y = 0;
+        w = config.image.size.max;
+        h = config.image.size.max;
+        imageSize = config.image.size.max;
       }
       else {
         imageMode(CORNER);
-        image(img[this.image], -rel.w / 2, -rel.h / 2, rel.h, rel.h);
+        x = -rel.w / 2;
+        y = -rel.h / 2;
+        w = rel.h;
+        h = rel.h;
+        imageSize = rel.h;
       }
+
+      rectMode(CORNER);
+      fill(255);
+      imageSize = imageSize / 2;
+      rect(-rel.w / 2, -rel.h / 2, imageSize * 2, rel.h);
+      image(img[this.image], x, y, w, h);
+      noFill();
+      rect(-rel.w / 2, -rel.h / 2, imageSize * 2, rel.h);
     }
+
 
     // redraw the stroke only
     noFill();
+    rectMode(CENTER);
     rect(0, 0, rel.w, rel.h);
 
     // set stroke and fill for text
@@ -55,7 +77,7 @@ class Counter {
     noStroke();
 
     if (typeof this.textSize !== "undefined") {
-      textSize(this.textSize);
+      textSize(sze2fnt(this.textSize));
     }
 
     if (typeof this.text !== "undefined") {
@@ -72,7 +94,7 @@ class Counter {
       dFill = config.counter.fill.disabled;
     }
     else {
-      text(this.value, 0, 0);
+      text(this.value, 0 + imageSize, 0);
     }
 
     fill(dFill);

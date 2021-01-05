@@ -4,6 +4,16 @@
   "debug": true,
   "listen": "127.0.0.1:8080",
   "screen": "dynamic",
+  "font": {
+    "min": 12,
+    "max": 64,
+    "size": {
+      "large": 2,
+      "medium": 1.5,
+      "normal": 1,
+      "small": 0.5
+    }
+  },
   "select": {
     "position": {
       "x": 5,
@@ -27,7 +37,7 @@
   },
   "text": {
     "color": 0,
-    "size": 36
+    "size": "medium"
   },
   "player": {
     "fill": {
@@ -78,8 +88,8 @@
             4
           ]
         },
-        "textSize": 64,
-        "fill": 255,
+        "textSize": "large",
+        "fill": [255, 127, 255, 75],
         "image": "health.png"
       },
       "eyeball": {
@@ -103,7 +113,8 @@
             7
           ]
         },
-        "fill": 255,
+        "fill": [127, 255, 255, 75],
+        "textSize": "medium",
         "image": "eyeball.png"
       },
       "lightning": {
@@ -124,7 +135,8 @@
             7
           ]
         },
-        "fill": 255,
+        "fill": [255, 255, 127, 75],
+        "textSize": "medium",
         "image": "lightning.png"
       },
       "horn": {
@@ -148,11 +160,12 @@
             7
           ]
         },
-        "fill": 255,
+        "fill": [127, 255, 127, 75],
         "textColor": 0,
+        "textSize": "medium",
         "image": "horn.png"
       },
-      "enemy1": {
+      "enemy4": {
         "position": {
           "x": [
             -2,
@@ -173,8 +186,8 @@
             9
           ]
         },
-        "fill": 255,
-        "textSize": 18,
+        "fill": [127, 127, 255, 75],
+        "textSize": "small",
         "disabled": true,
         "image": "enemy.png"
       },
@@ -199,12 +212,12 @@
             9
           ]
         },
-        "fill": 255,
-        "textSize": 18,
+        "fill": [127, 127, 255, 75],
+        "textSize": "small",
         "disabled": true,
         "image": "enemy.png"
       },
-      "enemy3": {
+      "enemy1": {
         "position": {
           "x": 0,
           "y": [
@@ -222,13 +235,12 @@
             9
           ]
         },
-        "fill": 255,
-        "text": "Testing",
-        "textSize": 18,
+        "fill": [127, 127, 255, 75],
+        "textSize": "small",
         "disabled": true,
         "image": "enemy.png"
       },
-      "enemy4": {
+      "enemy3": {
         "position": {
           "x": [
             1,
@@ -249,8 +261,8 @@
             9
           ]
         },
-        "fill": 255,
-        "textSize": 18,
+        "fill": [127, 127, 255, 75],
+        "textSize": "small",
         "disabled": true,
         "image": "enemy.png"
       },
@@ -275,8 +287,8 @@
             9
           ]
         },
-        "fill": 255,
-        "textSize": 18,
+        "fill": [127, 127, 255, 75],
+        "textSize": "small",
         "disabled": true,
         "image": "enemy.png"
       }

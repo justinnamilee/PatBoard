@@ -21,3 +21,13 @@ function arr2num(o) {
     }
   }
 }
+
+function sze2fnt(f) {
+  let m = config.font.size[f];
+
+  if (typeof m === "undefined") {
+    m = 1;
+  }
+
+  return (m * map(windowHeight, 0, 2160, config.font.min, config.font.max, true));
+}

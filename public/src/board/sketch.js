@@ -48,7 +48,7 @@ function checkRoom() {
         socket.off(room);
         console.log(`Changed room from ${room} to ${r}.`);
         room = r;
-        socket.on(room, function(d) {
+        socket.on(room, function (d) {
           populate(d);
         });
       }
@@ -95,9 +95,15 @@ function setup() {
   // build our base canvas
   createCanvas(config.resolution.w, config.resolution.h);
 
+  // room selector
+  let roomSelect = createInput();
+  roomSelect.position(config.room.position.x, config.room.position.y);
+  ui.roomSelect = roomSelect;
+  roomSelect.value(room);
+
   // add selector
   let boardSelect = createSelect();
-  ui.boardSelect = boardSelect;
+  boardSelect.position(config.select.position.x + roomSelect.width, config.select.position.y);
 
   for (let l in config.layout) {
     boardSelect.option(l);
@@ -110,11 +116,6 @@ function setup() {
 
     resetLayout();
   });
-
-  // room selector
-  let roomSelect = createInput();
-  ui.roomSelect = roomSelect;
-  roomSelect.value(room);
 
   // capture room list data & game data
   socket = io.connect(config.listen);
@@ -141,26 +142,20 @@ function setup() {
       p.push(new Player(config.board, i));
     }
   }
-
-  windowResized();
 }
 
 function windowResized() {
-  ui.roomSelect.position(config.room.position.x, config.room.position.y);
-  ui.boardSelect.position(config.select.position.x + ui.roomSelect.width, config.select.position.y);
-}
-
-
-
-// output to screen
-function draw() {
-  if (config.screen === "dynamic" && windowWidth !== config.resolution.w && windowHeight !== config.resolution.h) {
+  if (config.screen === "dynamic") {
     config.resolution.w = windowWidth;
     config.resolution.h = windowHeight;
 
     createCanvas(config.resolution.w, config.resolution.h);
   }
+}
 
+
+// output to screen
+function draw() {
   background(bg);
 
   for (let i = 0; i < config.layout[config.board].position.length; i++) {
