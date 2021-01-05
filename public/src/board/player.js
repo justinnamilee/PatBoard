@@ -1,6 +1,7 @@
 class Player {
   constructor(l, n) {
     this.index = n;
+    this.name = "";
 
     this.setLayout(l, n);
 
@@ -38,7 +39,7 @@ class Player {
     fill(0);
     textAlign(LEFT, BOTTOM);
     text(
-      `P${this.index + 1}`,
+      `P${this.index + 1}: ${this.name}`,
       -((this.size.w * rel.w) / 2) + 2,
       (this.size.h * rel.h) / 2
     );

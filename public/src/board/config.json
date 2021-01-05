@@ -1,4 +1,5 @@
 {
+  "metaTag": "__meta",
   "board": "2 Long",
   "debug": true,
   "listen": "127.0.0.1:8080",

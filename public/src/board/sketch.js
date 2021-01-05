@@ -12,16 +12,18 @@ let room = "PatBoard.js";
 // ! // misc //
 
 function populate(r) {
-  console.log("populating!");
-  room = r.meta.name;
-  for (let p in r.meta.pool) {
-    if (r.meta.pool[p] !== "") {
-      let index = parseInt(p);
+  let t = config.metaTag;
+  room = r[t].name;
 
-      for (let c in config.design) {
-        console.log(p, c, r.data[r.meta.pool[p]][c]);
-        p[index].counter[c].value = r.data[r.meta.pool[p]][c];
+  for (let q in r[t].pool) {
+    if (r[t].pool[q] !== "") {
+      let index = parseInt(q) - 1;
+
+      for (let c in config.counter.design) {
+        p[index].counter[c].value = r.data[r[t].pool[q]][c];
       }
+
+      p[index].name = r.data[r[t].pool[q]].name;
     }
   }
 }
@@ -46,9 +48,7 @@ function checkRoom() {
         socket.off(room);
         console.log(`Changed room from ${room} to ${r}.`);
         room = r;
-        console.log(room);
         socket.on(room, function(d) {
-          console.log(d);
           populate(d);
         });
       }
@@ -154,10 +154,6 @@ function windowResized() {
 
 // output to screen
 function draw() {
-  if (typeof p !== "undefined") {
-    p[0].health++;
-  }
-
   if (config.screen === "dynamic" && windowWidth !== config.resolution.w && windowHeight !== config.resolution.h) {
     config.resolution.w = windowWidth;
     config.resolution.h = windowHeight;
