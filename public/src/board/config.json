@@ -9,7 +9,7 @@
     "max": 64,
     "size": {
       "large": 2,
-      "medium": 1.5,
+      "medium": 1.25,
       "normal": 1,
       "small": 0.5
     }
@@ -187,7 +187,7 @@
           ]
         },
         "fill": [127, 127, 255, 75],
-        "textSize": "small",
+        "textSize": "normal",
         "disabled": true,
         "image": "enemy.png"
       },
@@ -213,7 +213,7 @@
           ]
         },
         "fill": [127, 127, 255, 75],
-        "textSize": "small",
+        "textSize": "normal",
         "disabled": true,
         "image": "enemy.png"
       },
@@ -236,7 +236,7 @@
           ]
         },
         "fill": [127, 127, 255, 75],
-        "textSize": "small",
+        "textSize": "normal",
         "disabled": true,
         "image": "enemy.png"
       },
@@ -262,7 +262,7 @@
           ]
         },
         "fill": [127, 127, 255, 75],
-        "textSize": "small",
+        "textSize": "normal",
         "disabled": true,
         "image": "enemy.png"
       },
@@ -288,7 +288,7 @@
           ]
         },
         "fill": [127, 127, 255, 75],
-        "textSize": "small",
+        "textSize": "normal",
         "disabled": true,
         "image": "enemy.png"
       }
