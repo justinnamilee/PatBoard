@@ -13,7 +13,7 @@ let room = "PatBoard.js";
 
 function populate(r) {
   console.log("populating!");
-  room = r.meta.room;
+  room = r.meta.name;
   for (let p in r.meta.pool) {
     if (r.meta.pool[p] !== "") {
       let index = parseInt(p);
@@ -46,7 +46,11 @@ function checkRoom() {
         socket.off(room);
         console.log(`Changed room from ${room} to ${r}.`);
         room = r;
-        socket.on(room, populate);
+        console.log(room);
+        socket.on(room, function(d) {
+          console.log(d);
+          populate(d);
+        });
       }
     } else {
       ui.roomSelect.value(r);
@@ -129,11 +133,6 @@ function setup() {
   socket.on("session", function (l) {
     list = l;
     checkRoom();
-  });
-
-  // data from client
-  socket.on("update", function () {
-    console.log("data from client");
   });
 
   // generate play spaces

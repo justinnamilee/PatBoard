@@ -127,9 +127,11 @@ io.sockets.on("connection", function (s) {
 
   // handler for value changes
   s.on("update", function (d) {
+    // ? console.log("Caught update from client!", d);
+
     if (d.room in g && d.name in g[d.room].data) {
       d2g(d); // ingest data
-      s.emit(d.room, g[d.room]);
+      io.sockets.emit(d.room, g[d.room]);
       console.log(d.room, g[d.room]);
     } else {
       s.emit(d2rp(d), "kick", "You are in an abandoned room / not joined to this room.");
