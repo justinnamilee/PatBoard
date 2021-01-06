@@ -4,6 +4,7 @@
   "description": "A board for Pat.",
   "main": "patboard.js",
   "scripts": {
+    "start": "node patboard.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
