@@ -76,7 +76,7 @@ class Counter {
     fill(this.textColor);
     noStroke();
 
-    if (typeof this.text !== "undefined") {
+    if (typeof this.text === "string") {
       textSize(sze2fnt("small"));
       textAlign(CENTER, BOTTOM);
       text(this.text, imageSize, -rel.h / 2);
@@ -84,11 +84,11 @@ class Counter {
       textAlign(CENTER, CENTER);
     }
 
-    if (typeof this.textSize !== "undefined") {
+    if (typeof this.textSize === "string") {
       textSize(sze2fnt(this.textSize));
     }
 
-    if (typeof this.stroke !== "undefined") {
+    if (typeof this.stroke === "number") {
       stroke(this.stroke);
     }
 
@@ -97,7 +97,7 @@ class Counter {
     if (this.disabled) {
       dFill = config.counter.fill.disabled;
     }
-    else {
+    else if (typeof this.value === "number") {
       text(this.value, imageSize, +2);
     }
 

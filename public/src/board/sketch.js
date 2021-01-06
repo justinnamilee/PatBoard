@@ -198,6 +198,8 @@ function draw() {
       p.push(new Player(config.board, i));
     }
 
-    p[i].show();
+    if (typeof p[i] !== "undefined") {
+      p[i].show();
+    }
   }
 }
