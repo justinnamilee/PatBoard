@@ -57,7 +57,15 @@ function poolRemove(r, n) {
 // * make sure we refresh wallboards
 setInterval(function() {
   io.sockets.emit("session", Object.keys(g));
-}, 5000);
+}, 4567);
+
+setInterval(function() {
+  for (let s in g) {
+    if (typeof g[s] !== "undefined"){
+      io.sockets.emit(s, g[s]);
+    }
+  }
+}, 5678);
 
 
 // * setup express server

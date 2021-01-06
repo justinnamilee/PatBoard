@@ -1,5 +1,5 @@
 {
-  "listen": "10.6.6.160:8080",
+  "listen": "kitten.pink:8080",
   "framerate": 10,
   "defaultEmit": "change",
   "text": {

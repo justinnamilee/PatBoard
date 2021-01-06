@@ -15,17 +15,30 @@ function populate(r) {
   let t = config.metaTag;
   room = r[t].name;
 
+
+  // remove old players
+  for (let j of p) {
+    if (!(j.name in r[t].pool))
+    {
+      j.name = "";
+    }
+  }
+
+  // populate data of players
   for (let q in r[t].pool) {
     if (r[t].pool[q] !== "") {
       let index = parseInt(q) - 1;
 
+      // stuff the counter
       for (let c in config.counter.design) {
         p[index].counter[c].value = r.data[r[t].pool[q]][c];
       }
 
+      // set name
       p[index].name = r.data[r[t].pool[q]].name;
 
-      let e = 0; // * map in enemies
+      // populate enemies
+      let e = 0;
       for (let w in r[t].pool) {
         if (r[t].pool[w] !== r[t].pool[q])
         {

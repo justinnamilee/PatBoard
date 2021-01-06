@@ -2,7 +2,7 @@
   "metaTag": "__meta",
   "board": "2 Long",
   "debug": true,
-  "listen": "127.0.0.1:8080",
+  "listen": "kitten.pink:8080",
   "screen": "dynamic",
   "font": {
     "min": 12,

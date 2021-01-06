@@ -232,21 +232,33 @@ function setup() {
 
   let controlInput = createInput();
   design.controlInput = controlInput;
+  controlInput.input(function () {
+    let key = controlInput.value().split("");
+    let clear = false;
+
+    for (let k of key) {
+      if (k === 'h') {
+        data.health--;
+        clear = true;
+        socket.emit("update", data);
+      } else if (k === 'H') {
+        data.health++;
+        clear = true;
+        socket.emit("update", data);
+      }
+
+      // TODO: vvvvvvvvvvvvv
+      // ! // add more here // ! //
+    }
+
+    if (clear) {
+      controlInput.value("");
+    }
+  });
   controlInput.hide();
 
   // fit to window
   windowResized();
-}
-
-
-function keyTyped() {
-  if (key === 'h') {
-    data.health--;
-    socket.emit("update", data);
-  } else if (key === 'H') {
-    data.health++;
-    socket.emit("update", data);
-  }
 }
 
 
@@ -289,7 +301,6 @@ function draw() {
   // control
   if (connected) {
     design.controlInput.show();
-    design.controlInput.value("");
 
     push();
     textAlign(LEFT, TOP);
