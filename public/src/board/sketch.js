@@ -15,12 +15,13 @@ function populate(r) {
   let t = config.metaTag;
   room = r[t].name;
 
-
   // remove old players
-  for (let j of p) {
-    if (!(j.name in r[t].pool))
-    {
-      j.name = "";
+  for (let i = 0; i < p.length; i++) {
+    let j = p[i];
+    if (typeof j !== "undefined") {
+      if (!(j.player in r[t].pool)) {
+        p[i] = new Player(config.board, i);
+      }
     }
   }
 
@@ -40,8 +41,7 @@ function populate(r) {
       // populate enemies
       let e = 0;
       for (let w in r[t].pool) {
-        if (r[t].pool[w] !== r[t].pool[q])
-        {
+        if (r[t].pool[w] !== r[t].pool[q]) {
           let enemy = "enemy" + ++e;
 
           if (r[t].pool[w] !== "") {
