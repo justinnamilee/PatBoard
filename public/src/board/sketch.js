@@ -6,6 +6,7 @@ let img;
 let ui = {};
 let list = [];
 let room = "PatBoard.js";
+let startup = true;
 
 
 // ! //
@@ -19,7 +20,7 @@ function populate(r) {
   for (let i = 0; i < p.length; i++) {
     let j = p[i];
     if (typeof j !== "undefined") {
-      if (!(j.player in r[t].pool)) {
+      if (!Object.values(r[t].pool).includes(j.name)) {
         p[i] = new Player(config.board, i);
       }
     }
@@ -73,7 +74,8 @@ function checkRoom() {
     if (r !== "" && list.find(e => e === r)) {
       // ! change all of this vvv lmao
       ui.roomSelect.value(r + " :: connected"); // TODO: move to config
-      if (room !== r) {
+      if (room !== r || startup) {
+        startup = false;
         socket.off(room);
         console.log(`Changed room from ${room} to ${r}.`);
         room = r;

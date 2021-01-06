@@ -24,7 +24,11 @@ class Player {
     angleMode(DEGREES);
     rotate(this.rotation);
 
-    fill(config.player.fill.enabled);
+    fill(config.player.fill.disabled);
+    if (this.name !== "") {
+      fill(config.player.fill.enabled);
+    }
+
     strokeWeight(3);
     stroke(this.color);
 

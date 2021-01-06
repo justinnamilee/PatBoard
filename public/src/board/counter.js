@@ -78,8 +78,8 @@ class Counter {
 
     if (typeof this.text !== "undefined") {
       textSize(sze2fnt("small"));
-      textAlign(CENTER, TOP);
-      text(this.text, imageSize, -rel.h);
+      textAlign(CENTER, BOTTOM);
+      text(this.text, imageSize, -rel.h / 2);
       textSize(sze2fnt(config.text.size));
       textAlign(CENTER, CENTER);
     }
