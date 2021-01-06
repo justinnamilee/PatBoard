@@ -163,6 +163,7 @@ function setup() {
 }
 
 
+// we be growin
 function windowResized() {
   if (config.screen === "dynamic") {
     config.resolution.w = windowWidth;

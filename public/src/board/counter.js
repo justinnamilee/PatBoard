@@ -98,7 +98,7 @@ class Counter {
       dFill = config.counter.fill.disabled;
     }
     else {
-      text(this.value, imageSize, 0);
+      text(this.value, imageSize, +2);
     }
 
     fill(dFill);
