@@ -76,12 +76,16 @@ class Counter {
     fill(this.textColor);
     noStroke();
 
-    if (typeof this.textSize !== "undefined") {
-      textSize(sze2fnt(this.textSize));
+    if (typeof this.text !== "undefined") {
+      textSize(sze2fnt("small"));
+      textAlign(CENTER, TOP);
+      text(this.text, imageSize, -rel.h);
+      textSize(sze2fnt(config.text.size));
+      textAlign(CENTER, CENTER);
     }
 
-    if (typeof this.text !== "undefined") {
-      text(this.text, 0, -rel.h);
+    if (typeof this.textSize !== "undefined") {
+      textSize(sze2fnt(this.textSize));
     }
 
     if (typeof this.stroke !== "undefined") {
@@ -94,7 +98,7 @@ class Counter {
       dFill = config.counter.fill.disabled;
     }
     else {
-      text(this.value, 0 + imageSize, 0);
+      text(this.value, imageSize, 0);
     }
 
     fill(dFill);

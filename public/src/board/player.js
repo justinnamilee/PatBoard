@@ -38,6 +38,7 @@ class Player {
     noStroke();
     fill(0);
     textAlign(LEFT, BOTTOM);
+    textSize(sze2fnt("small"));
     text(
       `P${this.index + 1}: ${this.name}`,
       -((this.size.w * rel.w) / 2) + 2,

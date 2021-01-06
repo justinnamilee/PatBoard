@@ -24,6 +24,22 @@ function populate(r) {
       }
 
       p[index].name = r.data[r[t].pool[q]].name;
+
+      let e = 0; // * map in enemies
+      for (let w in r[t].pool) {
+        if (r[t].pool[w] !== r[t].pool[q])
+        {
+          let enemy = "enemy" + ++e;
+
+          if (r[t].pool[w] !== "") {
+            p[index].counter[enemy].disabled = false;
+          } else {
+            p[index].counter[enemy].disabled = true;
+          }
+
+          p[index].counter[enemy].text = r[t].pool[w];
+        }
+      }
     }
   }
 }
@@ -142,7 +158,10 @@ function setup() {
       p.push(new Player(config.board, i));
     }
   }
+
+  windowResized();
 }
+
 
 function windowResized() {
   if (config.screen === "dynamic") {
@@ -165,6 +184,4 @@ function draw() {
 
     p[i].show();
   }
-
-  // noLoop();
 }
