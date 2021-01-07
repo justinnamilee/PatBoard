@@ -9,9 +9,13 @@
     "max": 64,
     "size": {
       "large": 2,
+      "big": 1.75,
+      "rotund": 1.5,
       "medium": 1.25,
       "normal": 1,
-      "small": 0.5
+      "hobbit": 0.75,
+      "small": 0.5,
+      "tiny": 0.25
     }
   },
   "select": {
@@ -52,7 +56,7 @@
         25,
         12,
         50,
-        127 
+        127
       ]
     }
   },
@@ -89,7 +93,12 @@
           ]
         },
         "textSize": "large",
-        "fill": [255, 127, 255, 75],
+        "fill": [
+          255,
+          127,
+          255,
+          75
+        ],
         "image": "health.png"
       },
       "eyeball": {
@@ -113,7 +122,12 @@
             7
           ]
         },
-        "fill": [127, 255, 255, 75],
+        "fill": [
+          127,
+          255,
+          255,
+          75
+        ],
         "textSize": "medium",
         "image": "eyeball.png"
       },
@@ -135,7 +149,12 @@
             7
           ]
         },
-        "fill": [255, 255, 127, 75],
+        "fill": [
+          255,
+          255,
+          127,
+          75
+        ],
         "textSize": "medium",
         "image": "lightning.png"
       },
@@ -160,7 +179,12 @@
             7
           ]
         },
-        "fill": [127, 255, 127, 75],
+        "fill": [
+          127,
+          255,
+          127,
+          75
+        ],
         "textColor": 0,
         "textSize": "medium",
         "image": "horn.png"
@@ -186,7 +210,12 @@
             9
           ]
         },
-        "fill": [127, 127, 255, 75],
+        "fill": [
+          127,
+          127,
+          255,
+          75
+        ],
         "textSize": "normal",
         "disabled": true,
         "image": "enemy.png"
@@ -212,7 +241,12 @@
             9
           ]
         },
-        "fill": [127, 127, 255, 75],
+        "fill": [
+          127,
+          127,
+          255,
+          75
+        ],
         "textSize": "normal",
         "disabled": true,
         "image": "enemy.png"
@@ -235,7 +269,12 @@
             9
           ]
         },
-        "fill": [127, 127, 255, 75],
+        "fill": [
+          127,
+          127,
+          255,
+          75
+        ],
         "textSize": "normal",
         "disabled": true,
         "image": "enemy.png"
@@ -261,7 +300,12 @@
             9
           ]
         },
-        "fill": [127, 127, 255, 75],
+        "fill": [
+          127,
+          127,
+          255,
+          75
+        ],
         "textSize": "normal",
         "disabled": true,
         "image": "enemy.png"
@@ -287,7 +331,12 @@
             9
           ]
         },
-        "fill": [127, 127, 255, 75],
+        "fill": [
+          127,
+          127,
+          255,
+          75
+        ],
         "textSize": "normal",
         "disabled": true,
         "image": "enemy.png"

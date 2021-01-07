@@ -136,9 +136,10 @@ class Counter {
     pop();
   }
 
-  positionButton(b,d) {
-      b.position(this.lPos.pla.w * width + (d * (this.lPos.imageSize - this.lPos.rel.w / 2)) + this.lPos.imageSize, this.lPos.pla.h * height - this.lPos.rel.h / 2);
-      b.size(this.lPos.rel.w / 2 - this.lPos.imageSize, this.lPos.rel.h);
+  positionButton(b, d) {
+    // ! // refactor this for ease of reading, or nah? haha
+    b.position(this.position.x * (this.lPos.c.w / 2) + this.lPos.pla.w * width + (d * (this.lPos.imageSize - this.lPos.rel.w / 2)) + this.lPos.imageSize, this.position.y * (this.lPos.c.h / 2) + this.lPos.pla.h * height - this.lPos.rel.h / 2);
+    b.size(this.lPos.rel.w / 2 - this.lPos.imageSize, this.lPos.rel.h);
   }
 
   positionButtons(bs) {

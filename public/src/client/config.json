@@ -1,6 +1,6 @@
 {
   "listen": "kitten.pink:8080",
-  "framerate": 10,
+  "framerate": 30,
   "board": "default",
   "metaTag": "__meta",
   "defaultEmit": "change",
@@ -10,13 +10,17 @@
     }
   },
   "font": {
-    "min": 12,
+    "min": 10,
     "max": 64,
     "size": {
       "large": 2,
+      "big": 1.75,
+      "rotund": 1.5,
       "medium": 1.25,
       "normal": 1,
-      "small": 0.5
+      "hobbit": 0.75,
+      "small": 0.5,
+      "tiny": 0.25
     }
   },
   "text": {
@@ -65,14 +69,8 @@
           127
         ],
         "buffer": 2,
-        "textSize": 14,
-        "maxSize": 30
-      },
-      "control": {
-        "position": {
-          "x": 0.1,
-          "y": 0.6
-        }
+        "textSize": "hobbit",
+        "maxSize": 10
       },
       "chat": {
         "position": {
