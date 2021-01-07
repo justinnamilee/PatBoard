@@ -187,6 +187,7 @@ function connectServer() {
 
 function preload() {
   config = loadJSON("src/client/config.json");
+  bg = loadImage("assets/space.jpg");
 }
 
 
@@ -263,7 +264,7 @@ function setup() {
 
 
 function draw() {
-  background(0);
+  background(bg ? bg : 0);
 
   // draw status window
   fill(config.ui.design.status.fill);
@@ -275,19 +276,16 @@ function draw() {
 
   textSize(config.ui.design.status.textSize);
 
-  text(
-    status.map(t => ">> " + t).join("\n"),
-    windowWidth * config.ui.design.status.position.x,
-    windowHeight * config.ui.design.status.position.y,
-    windowWidth * config.ui.design.status.size.w,
-    windowHeight * config.ui.design.status.size.h
-  );
-
   // debug stuff
   text(`P:${k2t(data.name)} R:${k2t(data.room)} N:${k2t(data.player)}`, 0, windowHeight);
 
   // bounding box
-  noFill();
+  if (typeof config.ui.design.status.fill === "undefined") {
+    noFill();
+  } else {
+    fill(config.ui.design.status.fill);
+  }
+
   stroke(config.ui.design.status.fill);
   strokeWeight(1);
 
@@ -298,12 +296,23 @@ function draw() {
     windowHeight * (config.ui.design.status.size.h) + config.ui.design.status.buffer
   );
 
+  fill(255);
+  noStroke();
+  text(
+    status.map(t => ">> " + t).join("\n"),
+    windowWidth * config.ui.design.status.position.x,
+    windowHeight * config.ui.design.status.position.y,
+    windowWidth * config.ui.design.status.size.w,
+    windowHeight * config.ui.design.status.size.h
+  );
+
   // control
   if (connected) {
     design.controlInput.show();
 
     push();
     textAlign(LEFT, TOP);
+    stroke(30);
 
     text(
       "Command Box",
