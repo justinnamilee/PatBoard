@@ -1,5 +1,6 @@
 // misc functions
 
+// does something? maybe?
 function arr2num(o) {
   for (let k in o) {
     if (Array.isArray(o[k])) {
@@ -10,6 +11,22 @@ function arr2num(o) {
 }
 
 
+// calculate rotated sizes, should be in player, likely
+function rot2sze(a) {
+  // compensate size for rotation
+  return a === 90 || a === 270
+    ? {
+      h: width,
+      w: height
+    }
+    : {
+      h: height,
+      w: width
+    };
+}
+
+
+// convert / scale font siies
 function sze2fnt(f) {
   let m = config.font.size[f];
 
@@ -20,6 +37,8 @@ function sze2fnt(f) {
   return (m * map(windowHeight, 0, 2160, config.font.min, config.font.max, true));
 }
 
+
+// should probably be in player class
 function populate(r, p) {
   let t = config.metaTag;
 

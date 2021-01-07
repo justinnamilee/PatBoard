@@ -6,7 +6,7 @@ let design = {}; // holds html items for repositioning
 let status = ["Welcome!"];
 let connected = false;
 let sync = true;
-let display;
+let p = [];
 
 
 // ! //////////////
@@ -99,6 +99,9 @@ function joinRoom() {
         if (sync && typeof c.data[data.name] === "object") {
           sync = false;
           data = Object.assign({}, c.data[data.name]);
+          p[0] = new Player(config.board,0);
+          console.log(p[0]);
+          p[0].disabled = false;
         }
 
         if (typeof c.data === "object") {
@@ -148,6 +151,7 @@ function quitRoom() {
   data = { name: data.name };
   game = {};
   sync = true;
+  p[0].disabled = true;
 }
 
 
@@ -310,6 +314,9 @@ function draw() {
   // control
   if (connected) {
     design.controlInput.show();
+    if (p.length > 0 && typeof p[0] === "object") {
+      p[0].show();
+    }
 
     push();
     textAlign(LEFT, TOP);

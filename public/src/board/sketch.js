@@ -13,20 +13,6 @@ let startup = true;
 // ! // misc //
 
 
-
-// misc functions
-function rot2sze(a) {
-  // compensate size for rotation
-  return a === 90 || a === 270
-    ? {
-      h: width,
-      w: height
-    }
-    : {
-      h: height,
-      w: width
-    };
-}
 // helper for callbacks
 function resetLayout() {
   for (let player of p) {

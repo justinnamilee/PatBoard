@@ -62,6 +62,7 @@ class Player {
   setLayout(l, n) {
     this.layout = l;
 
+    console.log(config);
     this.rotation = config.layout[l].rotation[n];
 
     this.position = Object.assign({}, config.layout[l].position[n]);
