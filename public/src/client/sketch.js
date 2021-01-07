@@ -101,6 +101,14 @@ function joinRoom() {
           data = Object.assign({}, c.data[data.name]);
           p[0] = new Player(config.board, 0);
           p[0].disabled = false;
+
+          // ! // setup callbacks for invisButtons
+          p[0].counter.health.button.up = createButton("test");
+          p[0].counter.health.button.up.class("invisButton");
+          p[0].counter.health.button.up.mousePressed(function(r) {
+            console.log("oh my", r);
+          });
+          p[0].counter.health.button.up.size(50,50);
         }
 
         if (typeof c.data === "object") {
@@ -112,7 +120,6 @@ function joinRoom() {
 
           game[config.metaTag] = { "pool": { "1": data.name }, "name": data.room };
 
-          console.log(game, p);
           populate(game, p);
         }
       } else {
@@ -154,7 +161,7 @@ function quitRoom() {
   data = { name: data.name };
   game = { data: {} };
   sync = true;
-  p[0].disabled = true;
+  p = [];
 }
 
 

@@ -11,3 +11,9 @@ h2 {
 input, button {
   font-size: large;
 }
+
+.invisButton {
+    background: transparent;
+    border: none !important;
+    font-size:0;
+}

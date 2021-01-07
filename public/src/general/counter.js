@@ -27,8 +27,7 @@ class Counter {
     this.fill = d.fill;
     this.stroke = d.stroke;
     this.image = d.image;
-    this.buttonUp;
-    this.buttonDown;
+    this.button = {};
     this.text = d.text;
     this.textSize = d.textSize;
     this.value = 0;
@@ -140,6 +139,8 @@ class Counter {
     fill(dFill);
     noStroke();
     rect(0, 0, rel.w, rel.h);
+
+
 
     pop();
   }
