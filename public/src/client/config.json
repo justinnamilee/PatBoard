@@ -4,6 +4,11 @@
   "board": "default",
   "metaTag": "__meta",
   "defaultEmit": "change",
+  "image": {
+    "size": {
+      "max": 50
+    }
+  },
   "font": {
     "min": 12,
     "max": 64,
@@ -15,7 +20,8 @@
     }
   },
   "text": {
-    "size": 36
+    "color": 0,
+    "size": "medium"
   },
   "ui": {
     "design": {
