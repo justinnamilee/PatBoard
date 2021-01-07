@@ -1,3 +1,23 @@
+// class Counter {
+//   constructor(d) {
+//     this.image = "";
+//     this.text = "";
+//   }
+
+//   show() {
+
+//   }
+
+//   hide() {
+//     if (typeof this.buttonDown !== "undefined") {
+//       this.buttonDown.hide();
+//     }
+//     if (typeof this.buttonUp !== "undefined") {
+//       this.buttonUp.hide();
+//     }
+//   }
+// }
+
 class Counter {
   constructor(d) {
     this.position = Object.assign({}, d.position);
@@ -7,6 +27,8 @@ class Counter {
     this.fill = d.fill;
     this.stroke = d.stroke;
     this.image = d.image;
+    this.buttonUp;
+    this.buttonDown;
     this.text = d.text;
     this.textSize = d.textSize;
     this.value = 0;
@@ -66,11 +88,11 @@ class Counter {
       rect(-rel.w / 2, -rel.h / 2, imageSize * 2, rel.h);
     }
 
-
     // redraw the stroke only
     noFill();
     rectMode(CENTER);
     rect(0, 0, rel.w, rel.h);
+    //this.buttonDown.position()
 
     // set stroke and fill for text
     fill(this.textColor);
@@ -92,10 +114,24 @@ class Counter {
       stroke(this.stroke);
     }
 
+    if (typeof this.buttonDown !== "undefined") {
+      this.buttonDown.show();
+    }
+    if (typeof this.buttonUp !== "undefined") {
+      this.buttonUp.show();
+    }
+
     let dFill = config.counter.fill.enabled;
 
     if (this.disabled) {
       dFill = config.counter.fill.disabled;
+
+      if (typeof this.buttonDown !== "undefined") {
+        this.buttonDown.hide();
+      }
+      if (typeof this.buttonUp !== "undefined") {
+        this.buttonUp.hide();
+      }
     }
     else if (typeof this.value === "number") {
       text(this.value, imageSize, +2);
