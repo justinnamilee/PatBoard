@@ -5,6 +5,7 @@ let game = { data: {} }; // state according to server
 let design = {}; // holds html items for repositioning
 let status = ["Welcome!"];
 let connected = false;
+let BUTTZ = {};
 let sync = true;
 let p = [];
 
@@ -98,17 +99,18 @@ function joinRoom() {
       if (typeof c === "object") {
         if (sync && typeof c.data[data.name] === "object") {
           sync = false;
+
           data = Object.assign({}, c.data[data.name]);
           p[0] = new Player(config.board, 0);
           p[0].disabled = false;
 
           // ! // setup callbacks for invisButtons
-          p[0].counter.health.button.up = createButton("test");
-          p[0].counter.health.button.up.class("invisButton");
-          p[0].counter.health.button.up.mousePressed(function(r) {
+          BUTTZ.hup = createButton("test");
+
+          BUTTZ.hup.mousePressed(function(r) {
             console.log("oh my", r);
           });
-          p[0].counter.health.button.up.size(50,50);
+          BUTTZ.hup.position(0,0);
         }
 
         if (typeof c.data === "object") {
@@ -348,5 +350,9 @@ function draw() {
     pop();
   } else {
     design.controlInput.hide();
+  }
+
+  if (p[0]) {
+    p[0].counter.health.positionButton(BUTTZ.hup);
   }
 }

@@ -37,7 +37,7 @@ class Player {
 
     if (this.name !== "") {
       for (let k in this.counter) {
-        this.counter[k].show(this.size.w * rel.w, this.size.h * rel.h);
+        this.counter[k].show(this.size.w * rel.w, this.size.h * rel.h, this.position.x, this.position.y);
       }
 
       noStroke();

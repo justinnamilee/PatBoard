@@ -33,13 +33,14 @@ class Counter {
     this.value = 0;
     this.disabled = d.disabled;
     this.textColor = d.textColor;
+    this.lPos;
 
     if (typeof this.textColor === "undefined") {
       this.textColor = config.text.color;
     }
   }
 
-  show(cw, ch) {
+  show(cw, ch, pw, ph) {
     push();
 
     translate(this.position.x * (cw / 2), this.position.y * (ch / 2));
@@ -51,6 +52,8 @@ class Counter {
       w: this.size.w * cw,
       h: this.size.h * ch
     };
+
+    this.lPos = { rel: rel, c: { w: cw, h: ch }, pla: { w: pw, h: ph} };
 
     // draw rect and stick the image in the corner
     fill(this.fill);
@@ -113,26 +116,11 @@ class Counter {
       stroke(this.stroke);
     }
 
-    if (typeof this.buttonDown !== "undefined") {
-      this.buttonDown.show();
-    }
-    if (typeof this.buttonUp !== "undefined") {
-      this.buttonUp.show();
-    }
-
     let dFill = config.counter.fill.enabled;
 
     if (this.disabled) {
       dFill = config.counter.fill.disabled;
-
-      if (typeof this.buttonDown !== "undefined") {
-        this.buttonDown.hide();
-      }
-      if (typeof this.buttonUp !== "undefined") {
-        this.buttonUp.hide();
-      }
-    }
-    else if (typeof this.value === "number") {
+    } else if (typeof this.value === "number") {
       text(this.value, imageSize, +2);
     }
 
@@ -140,14 +128,13 @@ class Counter {
     noStroke();
     rect(0, 0, rel.w, rel.h);
 
-    if (typeof this.button.up !== "undefined") {
-      // set position
-      // show?
-    }
-
-    if (typeof this.button.down !== "undefined") {
-    }
-
     pop();
+  }
+
+  positionButton(b) {
+    if (typeof this.lPos !== "undefined") {
+      // console.log(b, this.rel);
+      console.log(this.lPos);
+    }
   }
 }
