@@ -6,6 +6,7 @@ let design = {}; // holds html items for repositioning
 let status = ["Welcome!"];
 let connected = false;
 let sync = true;
+let display;
 
 
 // ! //////////////

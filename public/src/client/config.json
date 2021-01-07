@@ -2,6 +2,7 @@
   "listen": "kitten.pink:8080",
   "framerate": 10,
   "board": "default",
+  "metaTag": "__meta",
   "defaultEmit": "change",
   "text": {
     "size": 36

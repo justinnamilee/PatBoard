@@ -12,51 +12,7 @@ let startup = true;
 // ! //
 // ! // misc //
 
-function populate(r) {
-  let t = config.metaTag;
-  room = r[t].name;
 
-  // remove old players
-  for (let i = 0; i < p.length; i++) {
-    let j = p[i];
-    if (typeof j !== "undefined") {
-      if (!Object.values(r[t].pool).includes(j.name)) {
-        p[i] = new Player(config.board, i);
-      }
-    }
-  }
-
-  // populate data of players
-  for (let q in r[t].pool) {
-    if (r[t].pool[q] !== "") {
-      let index = parseInt(q) - 1;
-
-      // stuff the counter
-      for (let c in config.counter.design) {
-        p[index].counter[c].value = r.data[r[t].pool[q]][c];
-      }
-
-      // set name
-      p[index].name = r.data[r[t].pool[q]].name;
-
-      // populate enemies
-      let e = 0;
-      for (let w in r[t].pool) {
-        if (r[t].pool[w] !== r[t].pool[q]) {
-          let enemy = "enemy" + ++e;
-
-          if (r[t].pool[w] !== "") {
-            p[index].counter[enemy].disabled = false;
-          } else {
-            p[index].counter[enemy].disabled = true;
-          }
-
-          p[index].counter[enemy].text = r[t].pool[w];
-        }
-      }
-    }
-  }
-}
 
 // misc functions
 function rot2sze(a) {
@@ -92,7 +48,7 @@ function checkRoom() {
         console.log(`Changed room from ${room} to ${r}.`);
         room = r;
         socket.on(room, function (d) {
-          populate(d);
+          populate(d, p);
         });
       }
     } else {
