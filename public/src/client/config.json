@@ -4,6 +4,16 @@
   "board": "default",
   "metaTag": "__meta",
   "defaultEmit": "change",
+  "font": {
+    "min": 12,
+    "max": 64,
+    "size": {
+      "large": 2,
+      "medium": 1.25,
+      "normal": 1,
+      "small": 0.5
+    }
+  },
   "text": {
     "size": 36
   },
@@ -370,14 +380,8 @@
     "default": {
       "position": [
         {
-          "x": [
-            1,
-            2
-          ],
-          "y": [
-            1,
-            2
-          ]
+          "x": 0.5,
+          "y": 0.275
         }
       ],
       "rotation": [
@@ -386,7 +390,7 @@
       "size": [
         {
           "h": [
-            7,
+            4,
             8
           ],
           "w": [

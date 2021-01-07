@@ -1,7 +1,7 @@
 let config;
 let socket;
 let data = {}; // my state
-let game = {}; // state according to server
+let game = { data: {} }; // state according to server
 let design = {}; // holds html items for repositioning
 let status = ["Welcome!"];
 let connected = false;
@@ -99,18 +99,21 @@ function joinRoom() {
         if (sync && typeof c.data[data.name] === "object") {
           sync = false;
           data = Object.assign({}, c.data[data.name]);
-          p[0] = new Player(config.board,0);
-          console.log(p[0]);
+          p[0] = new Player(config.board, 0);
           p[0].disabled = false;
         }
 
         if (typeof c.data === "object") {
+          console.log("Game state updated.");
+
           for (let p in c.data) {
-            console.log("Game state updated.");
-            //if (p !== data.name) {
-            game[p] = c.data[p];
-            //}
+            game.data[p] = c.data[p];
           }
+
+          game[config.metaTag] = { "pool": { "1": data.name }, "name": data.room };
+
+          console.log(game, p);
+          populate(game, p);
         }
       } else {
         if (c === "kick") {
@@ -149,7 +152,7 @@ function quitRoom() {
   socketEmit("leave", data);
 
   data = { name: data.name };
-  game = {};
+  game = { data: {} };
   sync = true;
   p[0].disabled = true;
 }
@@ -193,6 +196,13 @@ function connectServer() {
 function preload() {
   config = loadJSON("src/client/config.json");
   bg = loadImage("assets/space.jpg");
+  img = {
+    "health.png": loadImage("assets/health.png"),
+    "eyeball.png": loadImage("assets/eyeball.png"),
+    "lightning.png": loadImage("assets/lightning.png"),
+    "horn.png": loadImage("assets/horn.png"),
+    "enemy.png": loadImage("assets/enemy.png")
+  };
 }
 
 
