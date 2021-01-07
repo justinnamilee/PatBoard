@@ -2,18 +2,22 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
 canvas {
   display: block;
 }
+
 h2 {
   color: white;
 }
+
 input, button {
   font-size: large;
 }
 
 .invisButton {
-    background: transparent;
-    border: none !important;
-    font-size:0;
+  background: transparent;
+  border: none !important;
+  font-size: 0;
+  outline: none;
 }

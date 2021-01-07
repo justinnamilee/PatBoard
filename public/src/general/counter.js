@@ -140,7 +140,13 @@ class Counter {
     noStroke();
     rect(0, 0, rel.w, rel.h);
 
+    if (typeof this.button.up !== "undefined") {
+      // set position
+      // show?
+    }
 
+    if (typeof this.button.down !== "undefined") {
+    }
 
     pop();
   }
