@@ -105,12 +105,13 @@ function joinRoom() {
           p[0].disabled = false;
 
           // ! // setup callbacks for invisButtons
-          BUTTZ.hup = createButton("test");
+          BUTTZ.health = {};
+          BUTTZ.health.up = createButton("test");
+          BUTTZ.health.down = createButton("oh no");
 
-          BUTTZ.hup.mousePressed(function(r) {
+          BUTTZ.health.up.mousePressed(function(r) {
             console.log("oh my", r);
           });
-          BUTTZ.hup.position(0,0);
         }
 
         if (typeof c.data === "object") {
@@ -353,6 +354,6 @@ function draw() {
   }
 
   if (p[0]) {
-    p[0].counter.health.positionButton(BUTTZ.hup);
+    p[0].counter.health.positionButtons(BUTTZ.health);
   }
 }

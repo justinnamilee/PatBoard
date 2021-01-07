@@ -53,8 +53,6 @@ class Counter {
       h: this.size.h * ch
     };
 
-    this.lPos = { rel: rel, c: { w: cw, h: ch }, pla: { w: pw, h: ph} };
-
     // draw rect and stick the image in the corner
     fill(this.fill);
     rect(0, 0, rel.w, rel.h);
@@ -89,6 +87,13 @@ class Counter {
       noFill();
       rect(-rel.w / 2, -rel.h / 2, imageSize * 2, rel.h);
     }
+
+    this.lPos = {
+      rel: rel,
+      c: { w: cw, h: ch },
+      pla: { w: pw, h: ph },
+      imageSize: imageSize
+    };
 
     // redraw the stroke only
     noFill();
@@ -131,10 +136,15 @@ class Counter {
     pop();
   }
 
-  positionButton(b) {
+  positionButton(b,d) {
+      b.position(this.lPos.pla.w * width + (d * (this.lPos.imageSize - this.lPos.rel.w / 2)) + this.lPos.imageSize, this.lPos.pla.h * height - this.lPos.rel.h / 2);
+      b.size(this.lPos.rel.w / 2 - this.lPos.imageSize, this.lPos.rel.h);
+  }
+
+  positionButtons(bs) {
     if (typeof this.lPos !== "undefined") {
-      // console.log(b, this.rel);
-      console.log(this.lPos);
+      this.positionButton(bs.up, 0);
+      this.positionButton(bs.down, 1);
     }
   }
 }
