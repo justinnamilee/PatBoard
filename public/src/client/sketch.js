@@ -1,10 +1,8 @@
 let config;
 let socket;
 let data = {}; // my state
-let game = { data: {} }; // state according to server
+let meta = {};
 let design = {}; // holds html items for repositioning
-let status;
-let connected = false;
 let udButton = {};
 let sync = true;
 let p = [];
@@ -25,7 +23,7 @@ function socketEmit(t, d) {
   if (typeof socket !== "undefined" && socket.connected) {
     socket.emit(t, d);
   } else {
-    status.add("Unable to send data to server, disconnected.");
+    console.log("Unable to send data to server, disconnected.");
   }
 }
 
@@ -56,10 +54,10 @@ function d2pr(d) {
 function joinRoom() {
   if (design.nameInput.value() !== "" && design.nameInput.value() !== config.ui.design.name.default) {
     if (typeof data.name === "undefined") {
-      status.add("You set your name to " + design.nameInput.value() + "!");
+      console.log("You set your name to " + design.nameInput.value() + "!");
     }
     else {
-      status.add("You changed your name from " + data.name + " to " + design.nameInput.value() + "!");
+      console.log("You changed your name from " + data.name + " to " + design.nameInput.value() + "!");
     }
 
     data.name = design.nameInput.value();
@@ -69,11 +67,12 @@ function joinRoom() {
   if (design.roomInput.value() !== "" && design.roomInput.value() !== config.ui.design.join.default && typeof data.name !== "undefined") {
     // * join room logic
     data.room = design.roomInput.value();
-    status.add("You joined " + data.room + "!");
+    console.log("You joined " + data.room + "!");
 
     design.roomInput.value("");
     design.roomInput.hide();
     design.joinButton.html(config.ui.design.join.text_alt);
+    design.joinButton.show();
     design.nameInput.hide();
     design.resetButton.show();
 
@@ -86,9 +85,11 @@ function joinRoom() {
         if (sync && typeof c.data[data.name] === "object") {
           sync = false;
 
-          data = Object.assign({}, c.data[data.name]);
-          p[0] = new Player(config.board, 0);
-          p[0].disabled = false;
+          data = c.data[data.name];
+          meta = c[config.metaTag];
+
+          p[data.player - 1] = new Player(config.board, 0);
+          p[data.player - 1].disabled = false;
 
           // ! // setup callbacks for invisButtons
           for (let cb in config.counter.design) {
@@ -104,26 +105,21 @@ function joinRoom() {
 
             udButton[cb].up.show();
             udButton[cb].down.show();
+
+            setTimeout(windowResized, 50);
           }
         }
 
         if (typeof c.data === "object") {
           console.log("Game state updated.");
-
-          for (let p in c.data) {
-            game.data[p] = c.data[p];
-          }
-
-          game[config.metaTag] = { "pool": { "1": data.name }, "name": data.room };
-
-          populate(game, p);
+          populate(c, p, true); // ? with skip mode enabled
         }
       } else {
         if (c === "kick") {
-          status.add("All were kicked: " + d);
+          console.log("All were kicked: " + d);
           quitRoom();
         } else if (c === "message") {
-          status.add("From server: ", d);
+          console.log("From server: ", d);
         }
       }
     });
@@ -131,10 +127,10 @@ function joinRoom() {
     // * server is talking to us in this room only
     socket.on(d2pr(data), function (c, d) {
       if (c === "kick") {
-        status.add("You were kicked: " + d);
+        console.log("You were kicked: " + d);
         quitRoom();
       } else if (c === "message") {
-        status.add("PM from server: " + d);
+        console.log("PM from server: " + d);
       }
     });
   }
@@ -142,7 +138,7 @@ function joinRoom() {
 
 
 function quitRoom() {
-  status.add("You left " + data.room + "!");
+  console.log("You left " + data.room + "!");
   design.resetButton.hide();
 
   socket.off(data.room);
@@ -156,8 +152,6 @@ function quitRoom() {
   socketEmit("leave", data);
 
   data = { name: data.name };
-  status.data = data;
-  game = { data: {} };
   sync = true;
   p = [];
 
@@ -170,22 +164,20 @@ function quitRoom() {
 
 function connectServer() {
   if (typeof socket === "undefined") {
-    status.add("Connecting to server.");
+    console.log("Connecting to server.");
 
     socket = io.connect(config.listen);
 
     socket.on("connect", function () {
-      status.add("Connected to server " + config.listen + ", nice!  ID: " + socket.id);
-      connected = true;
+      console.log("Connected to server " + config.listen + ", nice!  ID: " + socket.id);
     });
 
     socket.on("disconnect", function () {
-      status.add("Disconnected from server, boo.");
-      connected = false;
+      console.log("Disconnected from server, boo.");
     });
 
     socket.on("status", function (s) {
-      status.add("From server: " + s)
+      console.log("From server: " + s)
     });
 
     design.nameInput.show();
@@ -196,15 +188,19 @@ function connectServer() {
 }
 
 function resetSession() {
-  status.add("Resetting your board.");
-  let r = data.room;
+  console.log("Resetting your board.");
+
+  let rr = data.room;
+
   quitRoom();
+
   design.nameInput.hide();
   design.joinButton.hide();
   design.roomInput.hide();
   design.nameInput.value(data.name);
-  design.roomInput.value(r);
-  setInterval(joinRoom, 1000);
+  design.roomInput.value(rr);
+
+  setTimeout(joinRoom, 500);
 }
 
 // ! END OF BUTTON LOGICS
@@ -239,9 +235,6 @@ function setup() {
     }
   }
 
-  // setup status tracker ASAP
-  status = new Status(data);
-
   frameRate(config.framerate);
   createCanvas(windowWidth, windowHeight);
 
@@ -249,10 +242,12 @@ function setup() {
   for (let cb in config.counter.design) {
     udButton[cb] = {};
     udButton[cb].up = createButton("U");
+    udButton[cb].up.position(0,0);
     udButton[cb].up.class("invisButton");
-    udButton[cb].down = createButton("D");
-    udButton[cb].down.class("invisButton");
     udButton[cb].up.hide();
+    udButton[cb].down = createButton("D");
+    udButton[cb].down.position(0,0);
+    udButton[cb].down.class("invisButton");
     udButton[cb].down.hide();
   }
 
@@ -293,29 +288,30 @@ function setup() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  status.add("Window resized to " + windowWidth + "x" + windowHeight + ".");
+
+  console.log("Window resized to " + windowWidth + "x" + windowHeight + ".");
   design.nameInput.position(config.ui.design.name.position.x * windowWidth, config.ui.design.name.position.y * windowHeight);
   design.joinButton.position(config.ui.design.join.position.x * windowWidth - design.joinButton.width, config.ui.design.join.position.y * windowHeight);
   design.roomInput.position(config.ui.design.join.position.x * windowWidth - design.roomInput.width - design.joinButton.width, config.ui.design.join.position.y * windowHeight);
   design.connectButton.position(config.ui.design.connect.position.x * windowWidth - design.connectButton.width - design.roomInput.width - design.joinButton.width, config.ui.design.join.position.y * windowHeight);
   design.resetButton.position(config.ui.design.reset.position.x * windowWidth, config.ui.design.reset.position.y * windowHeight);
+
+  // adjust hidden buttons if required
+  if (p.slice(-1)[0]) {
+    for (let cb in config.counter.design) {
+      p.slice(-1)[0].counter[cb].positionButtons(udButton[cb]);
+    }
+  }
 }
 
 
 function draw() {
+  // set bg
   background(bg);
 
-  // status
-  status.show();
-
   // controls
-  if (connected) {
-    if (p.length > 0 && typeof p[0] === "object") {
-      for (let cb in config.counter.design) {
-        p[0].counter[cb].positionButtons(udButton[cb]);
-      }
-
-      p[0].show();
-    }
+  if (p.slice(-1)[0]) {
+    p.slice(-1)[0].index = 0;
+    p.slice(-1)[0].show();
   }
 }

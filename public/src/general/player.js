@@ -39,16 +39,6 @@ class Player {
       for (let k in this.counter) {
         this.counter[k].show(this.size.w * rel.w, this.size.h * rel.h, this.position.x, this.position.y);
       }
-
-      noStroke();
-      fill(0);
-      textAlign(LEFT, BOTTOM);
-      textSize(sze2fnt("small"));
-      text(
-        `P${this.index + 1}: ${this.name}`,
-        -((this.size.w * rel.w) / 2) + 2,
-        (this.size.h * rel.h) / 2
-      );
     }
 
     pop();

@@ -39,13 +39,13 @@ function sze2fnt(f) {
 
 
 // should probably be in player class
-function populate(r, p) {
+function populate(r, p, s) {
   let t = config.metaTag;
 
   // remove old players
   for (let i = 0; i < p.length; i++) {
     let j = p[i];
-    if (typeof j !== "undefined") {
+    if (typeof j !== "undefined" && !s) {
       if (!Object.values(r[t].pool).includes(j.name)) {
         p[i] = new Player(config.board, i);
       }
@@ -57,27 +57,29 @@ function populate(r, p) {
     if (r[t].pool[q] !== "") {
       let index = parseInt(q) - 1;
 
-      // stuff the counter
-      for (let c in config.counter.design) {
-        p[index].counter[c].value = r.data[r[t].pool[q]][c];
-      }
+      if (p[index]) {
+        // stuff the counter
+        for (let c in config.counter.design) {
+          p[index].counter[c].value = r.data[r[t].pool[q]][c];
+        }
 
-      // set name
-      p[index].name = r.data[r[t].pool[q]].name;
+        // set name
+        p[index].name = r.data[r[t].pool[q]].name;
 
-      // populate enemies
-      let e = 0;
-      for (let w in r[t].pool) {
-        if (r[t].pool[w] !== r[t].pool[q]) {
-          let enemy = "enemy" + ++e;
+        // populate enemies
+        let e = 0;
+        for (let w in r[t].pool) {
+          if (r[t].pool[w] !== r[t].pool[q]) {
+            let enemy = "enemy" + ++e;
 
-          if (r[t].pool[w] !== "") {
-            p[index].counter[enemy].disabled = false;
-          } else {
-            p[index].counter[enemy].disabled = true;
+            if (r[t].pool[w] !== "") {
+              p[index].counter[enemy].disabled = false;
+            } else {
+              p[index].counter[enemy].disabled = true;
+            }
+
+            p[index].counter[enemy].text = r[t].pool[w];
           }
-
-          p[index].counter[enemy].text = r[t].pool[w];
         }
       }
     }
