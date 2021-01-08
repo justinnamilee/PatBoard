@@ -283,7 +283,7 @@ function windowResized() {
 
 
 function draw() {
-  background(bg ? bg : 0);
+  background(bg);
 
   // status
   status.show();
