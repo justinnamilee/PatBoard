@@ -75,6 +75,7 @@ function joinRoom() {
     design.roomInput.hide();
     design.joinButton.html(config.ui.design.join.text_alt);
     design.nameInput.hide();
+    design.resetButton.show();
 
     socketEmit("join", data);
 
@@ -142,14 +143,10 @@ function joinRoom() {
 
 function quitRoom() {
   status.add("You left " + data.room + "!");
+  design.resetButton.hide();
 
   socket.off(data.room);
   socket.off(d2pr(data));
-
-  design.roomInput.value(config.ui.design.join.default);
-  design.roomInput.show();
-  design.joinButton.html(config.ui.design.join.text);
-  design.nameInput.show();
 
   for (let cb in config.counter.design) {
     udButton[cb].up.hide();
@@ -163,6 +160,11 @@ function quitRoom() {
   game = { data: {} };
   sync = true;
   p = [];
+
+  design.roomInput.value(config.ui.design.join.default);
+  design.roomInput.show();
+  design.joinButton.html(config.ui.design.join.text);
+  design.nameInput.show();
 }
 
 
@@ -191,6 +193,18 @@ function connectServer() {
     design.roomInput.show();
     design.connectButton.hide();
   }
+}
+
+function resetSession() {
+  status.add("Resetting your board.");
+  let r = data.room;
+  quitRoom();
+  design.nameInput.hide();
+  design.joinButton.hide();
+  design.roomInput.hide();
+  design.nameInput.value(data.name);
+  design.roomInput.value(r);
+  setInterval(joinRoom, 1000);
 }
 
 // ! END OF BUTTON LOGICS
@@ -267,6 +281,11 @@ function setup() {
   design.connectButton = connectButton;
   connectButton.mousePressed(connectServer);
 
+  let resetButton = createButton(config.ui.design.reset.text);
+  design.resetButton = resetButton;
+  resetButton.mousePressed(resetSession);
+  resetButton.hide();
+
   // fit to window
   windowResized();
 }
@@ -279,6 +298,7 @@ function windowResized() {
   design.joinButton.position(config.ui.design.join.position.x * windowWidth - design.joinButton.width, config.ui.design.join.position.y * windowHeight);
   design.roomInput.position(config.ui.design.join.position.x * windowWidth - design.roomInput.width - design.joinButton.width, config.ui.design.join.position.y * windowHeight);
   design.connectButton.position(config.ui.design.connect.position.x * windowWidth - design.connectButton.width - design.roomInput.width - design.joinButton.width, config.ui.design.join.position.y * windowHeight);
+  design.resetButton.position(config.ui.design.reset.position.x * windowWidth, config.ui.design.reset.position.y * windowHeight);
 }
 
 

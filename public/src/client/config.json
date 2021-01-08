@@ -29,6 +29,13 @@
   },
   "ui": {
     "design": {
+      "reset": {
+        "text": "Reset",
+        "position": {
+          "x": 0.01,
+          "y": 0.01
+        }
+      },
       "name": {
         "position": {
           "x": 0.01,
@@ -69,8 +76,8 @@
           127
         ],
         "buffer": 2,
-        "textSize": "hobbit",
-        "maxSize": 10
+        "textSize": "small",
+        "maxSize": 12
       },
       "chat": {
         "position": {
