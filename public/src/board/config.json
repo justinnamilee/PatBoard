@@ -2,7 +2,7 @@
   "metaTag": "__meta",
   "board": "2 Long",
   "debug": true,
-  "listen": "kitten.pink:8080",
+  "listen": "https://patboard.taiz.me",
   "screen": "dynamic",
   "font": {
     "min": 12,

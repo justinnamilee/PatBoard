@@ -1,5 +1,5 @@
 {
-  "listen": "kitten.pink:8080",
+  "listen": "https://patboard.taiz.me",
   "framerate": 30,
   "board": "default",
   "metaTag": "__meta",
