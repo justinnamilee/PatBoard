@@ -64,7 +64,7 @@ function joinRoom() {
     design.nameInput.value(config.ui.design.name.default);
   }
 
-  if (design.roomInput.value() !== "" && design.roomInput.value() !== config.ui.design.join.default && typeof data.name !== "undefined") {
+  if (typeof data.name !== "undefined") {
     // * join room logic
     data.room = design.roomInput.value();
     console.log("You joined " + data.room + "!");
