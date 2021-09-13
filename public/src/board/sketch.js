@@ -81,15 +81,25 @@ function setup() {
   // build our base canvas
   createCanvas(config.resolution.w, config.resolution.h);
 
+  let resetButton = createButton(config.reset.text);
+  resetButton.position(config.reset.position.x, config.reset.position.y);
+  resetButton.mousePressed(function() {
+    if (typeof socket !== "undefined" && socket.connected) {
+      socket.off(room);
+      socket.emit("reset", room);
+      resetLayout();
+    }
+  });
+
   // room selector
   let roomSelect = createInput();
-  roomSelect.position(config.room.position.x, config.room.position.y);
+  roomSelect.position(config.room.position.x + resetButton.width, config.room.position.y);
   ui.roomSelect = roomSelect;
   roomSelect.value(room);
 
   // add selector
   let boardSelect = createSelect();
-  boardSelect.position(config.select.position.x + roomSelect.width, config.select.position.y);
+  boardSelect.position(config.select.position.x + resetButton.width + roomSelect.width, config.select.position.y);
 
   for (let l in config.layout) {
     boardSelect.option(l);
@@ -103,15 +113,7 @@ function setup() {
     resetLayout();
   });
 
-  let resetButton = createButton(config.reset.text);
-  resetButton.position(config.reset.position.x + roomSelect.width + boardSelect.width, config.reset.position.y);
-  resetButton.mousePressed(function() {
-    if (typeof socket !== "undefined" && socket.connected) {
-      socket.off(room);
-      socket.emit("reset", room);
-      resetLayout();
-    }
-  });
+
 
   // capture room list data & game data
   socket = io.connect(config.listen);
