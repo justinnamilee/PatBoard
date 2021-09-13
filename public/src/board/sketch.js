@@ -38,6 +38,7 @@ function checkRoom() {
         });
       }
     } else {
+      p = [];
       ui.roomSelect.value(r);
     }
   }
@@ -96,6 +97,7 @@ function setup() {
     if (typeof socket !== "undefined" && socket.connected) {
       socket.off(room);
       socket.emit("reset", room);
+      resetLayout()
     }
   });
 
@@ -107,7 +109,7 @@ function setup() {
 
   boardSelect.changed(function () {
     config.board = boardSelect.value();
-
+    checkRoom();
     resetLayout();
   });
 
