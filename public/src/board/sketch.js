@@ -103,13 +103,13 @@ function setup() {
     resetLayout();
   });
 
-  let resetButton = createButton("Reset");
-  resetButton.position(5 + roomSelect.width + boardSelect.width, 5)
+  let resetButton = createButton(config.reset.text);
+  resetButton.position(config.reset.position.x + roomSelect.width + boardSelect.width, config.reset.position.y);
   resetButton.mousePressed(function() {
     if (typeof socket !== "undefined" && socket.connected) {
       socket.off(room);
       socket.emit("reset", room);
-      resetLayout()
+      resetLayout();
     }
   });
 

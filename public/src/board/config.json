@@ -18,6 +18,13 @@
       "tiny": 0.25
     }
   },
+  "reset": {
+    "text": "Reset",
+    "position": {
+      "x": 5,
+      "y": 5
+    }
+  },
   "select": {
     "position": {
       "x": 5,

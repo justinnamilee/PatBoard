@@ -30,7 +30,7 @@
   "ui": {
     "design": {
       "reset": {
-        "text": "Reset",
+        "text": "Rejoin",
         "position": {
           "x": 0.01,
           "y": 0.01
