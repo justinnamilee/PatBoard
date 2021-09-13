@@ -91,16 +91,6 @@ function setup() {
   let boardSelect = createSelect();
   boardSelect.position(config.select.position.x + roomSelect.width, config.select.position.y);
 
-  let resetButton = createButton("Reset");
-  resetButton.position(5 + roomSelect.width + boardSelect.width, 5)
-  resetButton.mousePressed(function() {
-    if (typeof socket !== "undefined" && socket.connected) {
-      socket.off(room);
-      socket.emit("reset", room);
-      resetLayout()
-    }
-  });
-
   for (let l in config.layout) {
     boardSelect.option(l);
   }
@@ -111,6 +101,16 @@ function setup() {
     config.board = boardSelect.value();
     checkRoom();
     resetLayout();
+  });
+
+  let resetButton = createButton("Reset");
+  resetButton.position(5 + roomSelect.width + boardSelect.width, 5)
+  resetButton.mousePressed(function() {
+    if (typeof socket !== "undefined" && socket.connected) {
+      socket.off(room);
+      socket.emit("reset", room);
+      resetLayout()
+    }
   });
 
   // capture room list data & game data
