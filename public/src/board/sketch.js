@@ -93,8 +93,10 @@ function setup() {
   let resetButton = createButton("Reset");
   resetButton.position(5 + roomSelect.width + boardSelect.width, 5)
   resetButton.mousePressed(function() {
-    socket.off(room);
-    io.sockets.emit("reset", room);
+    if (typeof socket !== "undefined" && socket.connected) {
+      socket.off(room);
+      socket.emit("reset", room);
+    }
   });
 
   for (let l in config.layout) {
