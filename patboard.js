@@ -121,6 +121,17 @@ io.sockets.on("connection", function (s) {
     }
   });
 
+  // hanlder for reset room
+  s.on("reset", function(d) {
+    console.log("Client " + s.id + " wants to reset " + d + ".");
+
+    if (d in g) {
+      delete g[d];
+    }
+
+    io.sockets.emit("session", Object.keys(g));
+  });
+
   // handler for room leave
   s.on("leave", function (d) {
     console.log("Client " + s.id + " wants to leave " + d.room + " as " + d.name + ".");

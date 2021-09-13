@@ -90,6 +90,13 @@ function setup() {
   let boardSelect = createSelect();
   boardSelect.position(config.select.position.x + roomSelect.width, config.select.position.y);
 
+  let resetButton = createButton("Reset");
+  resetButton.position(5 + roomSelect.width + boardSelect.width, 5)
+  resetButton.mousePressed(function() {
+    socket.off(room);
+    socketEmit("reset", room);
+  });
+
   for (let l in config.layout) {
     boardSelect.option(l);
   }
